@@ -17,3 +17,13 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
+
+## Terminal log
+```BASH
+vue create warlus
+cd  warlus
+vue add vuetify
+```
