@@ -1,7 +1,7 @@
 <template>
-    <v-app>
-        <set-focus-view/>
-    </v-app>
+    <section>
+        
+    </section>
 </template>
 
 <script>
@@ -16,13 +16,12 @@
 
 // ---------------------------- main logic
 
-    import SetFocusView from "@/views/SetFocus.vue"
-    components = { ...components, SetFocusView }
+
 
 // ---------------------------- export ready
 
 export default {
-    name: 'App',
+    name: 'SomeComponent',
     props,
     components,
     methods,

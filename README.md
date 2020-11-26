@@ -1,4 +1,5 @@
 # walrus
+Started: Nov 24, 2020 (walrus day)
 
 ## Project setup
 ```
@@ -21,9 +22,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 
-## Terminal log
+## Project log
 ```BASH
-vue create warlus
-cd  warlus
+vue create walrus
+cd  walrus
 vue add vuetify
+
+git init
+git add .
+git commit -m "Initial setup"
+git remote add origin https://github.com/zlsheepcity/emergn-walrus.git
+git remote -v
+git push origin master
 ```
+
+
