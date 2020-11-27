@@ -1,6 +1,12 @@
 <template>
+<section template-wrap>
+
+    <article>
+        
+    </article>
+
     <v-container>
-        <h2>Set Focus</h2>
+        <h2>Set Focus...</h2>
 
         <article class="AdminFormGrid">
 
@@ -29,12 +35,13 @@
             <v-divider class="my-4"/>
 
             <section>
-                <list-editor :list="items" :del="items.deleteItem"/>
+                <list-editor :list="items"/>
             </section>
 
         </article>
 
     </v-container>
+</section>
 </template>
 
 <script>
@@ -58,11 +65,11 @@
 
     const testlist = new EditableList()
     testlist.createItem('test x1')
-    testlist.createItem('test x2')
-    testlist.createItem('test x3')
+    let deleteThisItemB = testlist.createItem('test x2')
+    let deleteThisItemA = testlist.createItem('test x3 (should be deleted)')
     testlist.createItem('test x4')
-    testlist.updateItem({rowId:1,label:'updated item'})
-    testlist.deleteItem({rowId:3})
+    testlist.updateItem({rowid:1,label:'updated item'})
+    testlist.deleteItem(deleteThisItemA)
     items = testlist.getList()
 
     

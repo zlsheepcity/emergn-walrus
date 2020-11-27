@@ -3,7 +3,7 @@ let ListRow = function (dna) {
     // Seed
     let RNA = this
     let row = {
-        rowId: 0,
+        rowid: 0,
         order: 0,
         label: '',
         child: false, // another list attached to this row
@@ -27,53 +27,51 @@ let EditableList = function (dna) {
     let RNA  = this
     RNA.rows = []
 
+    // API
+    RNA.getList    = f => RNA.GetOrderedList(f)
+    RNA.createItem = label => RNA.Row_CreateNew(label)
+    RNA.updateItem = item  => RNA.Row_UpdateLabel(item)
+    RNA.deleteItem = item  => RNA.Row_Delete(item)
+
     // Workers
     RNA.GetNewValue = v => RNA.GetMaxValue(v) *1 +1;
     RNA.GetMaxValue = v => {
-        let current = 0
-        let search  = row => { if (current<row[v]) current=row[v] }
-        RNA.rows.map(search)
-        return current
+        let extract = RNA.rows.map(row=>row[v])
+        let maximum = Math.max(...extract, 0)
+        return maximum
     }
-    RNA.CreateNewRow = label => {
-        let rowId = RNA.GetNewValue('rowId')
+    RNA.GetIndexById = id => {
+        let extract = RNA.rows.map(row=>row.rowid)
+        let indexof = extract.indexOf(id)
+        return indexof
+    }
+    RNA.Row_CreateNew = label => {
+        let rowid = RNA.GetNewValue('rowid')
         let order = RNA.GetNewValue('order')
-        const row = new ListRow({ rowId, order, label })
+        const row = new ListRow({ rowid, order, label })
         RNA.rows.push(row)
+        return row
+    }
+    RNA.Row_Delete  = row => {
+        let {rowid} = row
+        let index = RNA.GetIndexById(rowid)
+        if (index===false) return false // nothing to delete
+        RNA.rows.splice(index,1)
+        return true
+    }
+    RNA.Row_UpdateLabel = row => {
+        let {rowid, label} = row
+        let index = RNA.GetIndexById(rowid)
+        if (index===false) return false // nothing to update
+        RNA.rows[index].UpdateLabel(label)
     }
     RNA.GetOrderedList = f => {
         let rule = (a,b) => a.order > b.order
         let list = [...RNA.rows].sort(rule)
         return list
     }
-    RNA.GetRowIndexById = id => {
-        let index  = false
-        let search = (row, i) => { if (id===row.rowId) index=i }
-        RNA.rows.map(search)
-        return index
-    }
-    RNA.UpdateLabel = row => {
-        let {rowId, label} = row
-        let index = RNA.GetRowIndexById(rowId)
-        if (index===false) return false // nothing to update
-        RNA.rows[index].UpdateLabel(label)
-    }
-    RNA.DeleteRow = row => {
-        let {rowId} = row
-        let index = RNA.GetRowIndexById(rowId)
-        if (index===false) return false // nothing to delete
-        RNA.rows.splice(index,1)
-    }
 
-    // API
-
-    RNA.getList    = RNA.GetOrderedList
-    RNA.createItem = RNA.CreateNewRow
-    RNA.updateItem = RNA.UpdateLabel
-    RNA.deleteItem = RNA.DeleteRow
-
-// ---------------------------- POLYMERASE
-
+    // Polymerase
     Object.assign(RNA, dna)
 
 }

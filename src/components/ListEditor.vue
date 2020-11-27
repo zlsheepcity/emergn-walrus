@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h3>List Editor</h3>
+        <h3>Test Editor</h3>
         <div>{{list}}</div>
 
         <div v-for="item in list">
@@ -9,12 +9,6 @@
                 label="Define value"
                 class="mb-1"
                 />
-        </div>
-        <div>
-            <v-btn @click="delme(list,4)">check state</v-btn>
-        </div>
-        <div>
-            MSG:{{msg}}
         </div>
 
     </section>
@@ -33,17 +27,7 @@
 // ---------------------------- main logic
 
     // get list
-    props = [ ...props, 'list', 'del' ]
-
-    methods = {
-        delme (list,id) {
-            this.$data.msg = list
-        },
-    ...methods }
-
-    data = {
-        msg:'',
-    ...data }
+    props = [ ...props, 'list' ]
 
 // ---------------------------- export ready
 
