@@ -1,4 +1,4 @@
-let ListRow = function (dna) {
+let RowModel = function (protein) {
 
     // Seed
     let RNA = this
@@ -16,17 +16,15 @@ let ListRow = function (dna) {
     RNA.RemoveChild = child => RNA.child = false
 
     // Transcription
-    RNA = Object.assign( RNA, row, dna )
+    RNA = Object.assign( RNA, row, protein )
 
 }
-
-
-let EditableList = function (dna) {
+let EditableList = function (protein) {
 
 // ---------------------------- // Seed
 
     let RNA  = this
-    RNA.mRna = ListRow
+    RNA.mRna = RowModel
     RNA.rows = []
 
 // ---------------------------- // API
@@ -79,11 +77,12 @@ let EditableList = function (dna) {
 
 // ---------------------------- // Transcription
 
-    RNA = Object.assign( RNA, dna )
-
-    if (dna && dna.list && dna.list.length) {
-        dna.list.forEach(item=>RNA.createItem(item))
+    let DNA = {
+        list: [], // initial values
     }
+
+    RNA = Object.assign( RNA, DNA, protein )
+    RNA.list.forEach( item => RNA.createItem(item) )
 
 }
 
