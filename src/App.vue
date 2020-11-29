@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <set-focus-view/>
+        <home-view/>
     </v-app>
 </template>
 
@@ -16,13 +16,16 @@
 
 // ---------------------------- main logic
 
-    import SetFocusView from "@/views/SetFocus.vue"
-    components = { ...components, SetFocusView }
+    import HomeView from "@/views/Home.vue"
+    components = {  HomeView, ...components }
+
+/*    import SetFocusView from "@/views/SetFocus.vue"
+    components = { ...components, SetFocusView }*/
 
 // ---------------------------- export ready
 
 export default {
-    name: 'App',
+    name: 'VueApp',
     props,
     components,
     methods,

@@ -1,11 +1,36 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-  </div>
+    <wrap>
+
+        
+
+    </wrap>
 </template>
 
 <script>
+// ---------------------------- define export
+
+    let props       = []
+    let components  = {}
+    let methods     = {}
+    let computed    = {}
+    let watch       = {}
+    let data        = {}
+
+// ---------------------------- main logic
+
+
+
+// ---------------------------- export ready
+
 export default {
-  name: 'Home',
+    name: 'HomeView',
+    props,
+    components,
+    methods,
+    computed,
+    watch,
+    data () { return data },
 }
+
+// ---------------------------- end script
 </script>
