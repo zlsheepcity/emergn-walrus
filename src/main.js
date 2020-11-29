@@ -1,14 +1,32 @@
+// framework
+
+let RUN = {}
 import Vue     from 'vue'
-import App     from './App.vue'
-import router  from './router'
-import store   from './store'
-import vuetify from './plugins/vuetify';
+import router  from './framework/router'
+import store   from './framework/store'
+import vuetify from './framework/vuetify';
+import wrap    from './framework/wrap';
 
-Vue.config.productionTip = false
+RUN = {
+   router,
+   store,
+   vuetify,
+...RUN }
 
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: f => f(App)
-}).$mount('#app')
+Vue.component( 'wrap', wrap )
+
+// app
+
+import App from './App.vue'
+const  HTMLid = '#app'
+const  render = f => f(App)
+
+RUN = {
+    render,
+...RUN }
+
+
+// Run!
+
+new Vue({...RUN}).$mount(HTMLid)
+

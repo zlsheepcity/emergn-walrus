@@ -1,7 +1,9 @@
 <template>
-    <section>
+    <wrap>
+
         
-    </section>
+
+    </wrap>
 </template>
 
 <script>

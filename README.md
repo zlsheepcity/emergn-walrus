@@ -1,28 +1,24 @@
-# walrus
-Started: Nov 24, 2020 (walrus day)
+# emergn-walrus 0.0.2
+Started: Nov 24, 2020 (international walrus day)
 
-## Project setup
-```
+## Browser Demo
+https://zlsheepcity.github.io/emergn-walrus/dist/
+
+
+## Code
+
+
+```BASH
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
-```
-
-### Compiles and minifies for production
-```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
+[Vue CLI Configuration Reference](https://cli.vuejs.org/config/)
 
 
 ## Project log
+
+
 ```BASH
 vue create walrus
 cd  walrus
@@ -34,6 +30,7 @@ git commit -m "Initial setup"
 git remote add origin https://github.com/zlsheepcity/emergn-walrus.git
 git remote -v
 git push origin master
+
+...create model  - editable list
+...create screen - list editor
 ```
-
-

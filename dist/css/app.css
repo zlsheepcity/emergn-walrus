@@ -1,1 +1,1 @@
-.FieldBlock{display:grid;grid-column-gap:1em;grid-template-columns:[a] auto [b] 10em [c]}.FieldBlock *{grid-column:a/b}.FieldBlock .edit-controls{grid-column:b/c}.dev-log{margin-top:20vh;padding-bottom:10vh}
+.FieldBlock{display:grid;grid-column-gap:10em;grid-template-columns:[a] auto [b] 10em [c]}.FieldBlock *{grid-column:a/b}.FieldBlock .edit-controls{grid-column:b/c}.dev-log{margin-top:20vh;padding-bottom:10vh}

@@ -1,5 +1,5 @@
 <template>
-<section template-wrap>
+    <wrap>
 
         <header>
             <v-container>
@@ -189,9 +189,13 @@
     <article class="dev-log">
         <v-container>
             <h2 class="pb-4">Development data</h2>
-            <h4 class="overline">Current list in plain view</h4>
 
-            <div>
+
+
+
+            <section>
+                <h4 class="overline">List plain view</h4>
+                <hr class="mb-2">
                 <div class="pt-0"><b>{{YourIndustry.caption}}</b></div>
                 <div v-for="item in YourIndustry.rows" class="pl-4" >
                     <div>{{item.label}}</div>
@@ -206,12 +210,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <hr class="mt-2">
+            </section>
 
         </v-container>
     </article>
 
-</section>
+    </wrap>
 </template>
 
 <script>
@@ -398,7 +403,7 @@ export default {
 <style>
     .FieldBlock {
         display: grid;
-        grid-column-gap: 1em;
+        grid-column-gap: 10em;
         grid-template-columns: [a] auto [b] 10em [c];
     }
     .FieldBlock *              { grid-column: a / b; }

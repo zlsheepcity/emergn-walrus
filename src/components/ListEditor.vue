@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h3>Test Editor</h3>
+        <h3>Test Editor (Deprecated)</h3>
         <div>{{list}}</div>
 
         <div v-for="item in list">
