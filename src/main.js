@@ -1,11 +1,11 @@
+let RUN = {}
+
 // framework
 
-let RUN = {}
 import Vue     from 'vue'
 import router  from './framework/router'
 import store   from './framework/store'
 import vuetify from './framework/vuetify';
-import wrap    from './framework/wrap';
 
 RUN = {
    router,
@@ -13,7 +13,10 @@ RUN = {
    vuetify,
 ...RUN }
 
-Vue.component( 'wrap', wrap )
+import wrap    from './framework/wrap';
+import debug   from './framework/debug';
+Vue.component( 'wrap',  wrap  )
+Vue.component( 'debug', debug )
 
 // app
 

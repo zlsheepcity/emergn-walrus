@@ -31,10 +31,11 @@ let EditableList = function (protein) {
 
     RNA.getList    = f  => RNA.GetOrderedList(f)
     RNA.getItem    = id => RNA.Row_Extract({rowid:id})
-    RNA.addLabel   = label => RNA.Row_Create({label}) // shortcut
+    RNA.createList = list  => RNA.List_RewriteSource(list)
+    RNA.updateList = list  => RNA.List_UpdateSource(list)
     RNA.createItem = item  => RNA.Row_Create(item)
-    RNA.updateItem = item  => RNA.Row_UpdateLabel(item)
     RNA.deleteItem = item  => RNA.Row_Delete(item)
+    RNA.updateItem = item  => RNA.Row_UpdateLabel(item)
 
 // ---------------------------- // Workers
 
@@ -80,6 +81,20 @@ let EditableList = function (protein) {
         let list = [...RNA.rows].sort(rule)
         return list
     }
+    RNA.List_RewriteSource = dna => {
+        Object.assign( RNA, dna )
+        RNA.rows = []
+        RNA.updateList(RNA.list)
+    }
+    RNA.List_UpdateSource = list => {
+        let  SublistConstructor = RNA.constructor || false
+        let  ReadList = row => {
+             if (SublistConstructor && row.list && row.list.length)
+                 row.child = new SublistConstructor({ ...row, caption:row.label })
+            RNA.createItem(row)
+        }
+        list.forEach(ReadList)
+    }
 
 // ---------------------------- // Transcription
 
@@ -87,8 +102,8 @@ let EditableList = function (protein) {
         list: [], // initial values
     }
 
-    RNA = Object.assign( RNA, DNA, protein )
-    RNA.list.forEach( item => RNA.createItem(item) )
+    RNA=Object.assign( RNA, DNA, protein )
+    RNA.updateList(RNA.list)
 
 }
 
