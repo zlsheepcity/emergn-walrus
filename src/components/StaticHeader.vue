@@ -3,15 +3,15 @@
 
         <v-container>
 
-            <v-chip disabled class="overline pr-4 mr-2">
+            <v-chip disabled small class="overline pr-4 mr-2">
                 ► Home
             </v-chip>
 
-            <v-chip disabled class="overline pr-4 mr-2">
+            <v-chip disabled small class="overline pr-4 mr-2">
                 ► Customer Self Assesment
             </v-chip>
 
-            <h2 class="px-2">
+            <h2>
                 Set Focus for Value Starter Engagement (Define priorities)
             </h2>
 
