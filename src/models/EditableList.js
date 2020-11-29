@@ -29,7 +29,8 @@ let EditableList = function (protein) {
 
 // ---------------------------- // API
 
-    RNA.getList    = f => RNA.GetOrderedList(f)
+    RNA.getList    = f  => RNA.GetOrderedList(f)
+    RNA.getItem    = id => RNA.Row_Extract({rowid:id})
     RNA.addLabel   = label => RNA.Row_Create({label}) // shortcut
     RNA.createItem = item  => RNA.Row_Create(item)
     RNA.updateItem = item  => RNA.Row_UpdateLabel(item)
@@ -37,32 +38,37 @@ let EditableList = function (protein) {
 
 // ---------------------------- // Workers
 
-    RNA.GetNewValue = v => RNA.GetMaxValue(v) *1 +1;
-    RNA.GetMaxValue = v => {
+    RNA.wGetNewValue = v => RNA.wGetMaxValue(v) *1 +1;
+    RNA.wGetMaxValue = v => {
         let extract = RNA.rows.map( row=>row[v] )
         let maximum = Math.max(...extract, 0)
         return maximum
     }
-    RNA.GetIndexById = id => {
+    RNA.wGetIndexById = id => {
         let extract = RNA.rows.map( row=>row.rowid )
         let indexof = extract.indexOf(id)
         return indexof
     }
     RNA.Row_Create = item => {
-        let  rowid = RNA.GetNewValue('rowid')
-        let  order = RNA.GetNewValue('order')
-        let  Model = RNA.mRna
+        let  rowid = RNA.wGetNewValue('rowid')
+        let  order = RNA.wGetNewValue('order')
+        let  model = RNA.mRna
         const rows = RNA.rows
-        let create = new Model({ ...item, rowid, order })
+        let create = new model({ ...item, rowid, order })
         rows.push(create)
         return create
     }
     RNA.Row_Delete    = item => {
         let { rowid } = item
         const rows    = RNA.rows
-        const index   = RNA.GetIndexById(rowid)
+        const index   = RNA.wGetIndexById(rowid)
         if  ( index === false ) return false
         else  rows.splice( index, 1 )
+    }
+    RNA.Row_Extract = item => {
+        let   {rowid} = item
+        const  index  = RNA.wGetIndexById(rowid)
+        return index!== false ? RNA.rows[index] : {empty:true}
     }
     RNA.Row_UpdateLabel = item => {
         let { rowid, label } = item
