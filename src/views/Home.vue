@@ -5,12 +5,12 @@
 
     <!-- fields -->
 
-    <v-container>
+    <v-container class="SetFocusFields">
 
         <!-- ···························· YourIndustry -->
 
         <section class="FieldBlock" v-for="list in [YourIndustry]">
-            <div class="overline">{{list.caption}}</div>
+            <div class="overline"  :class="uiIsListOpen(list)">{{list.caption}}</div>
             <div class="controls">
                 <v-btn
                     class  = "accent"
@@ -33,7 +33,7 @@
         <!-- ···························· PrimaryFocusLOB -->
 
         <section class="FieldBlock" v-for="list in [PrimaryFocusLOB]">
-            <div class="overline">{{list.caption}}</div>
+            <div class="overline"  :class="uiIsListOpen(list)">{{list.caption}}</div>
             <div class="controls">
                 <v-btn
                     class  = "accent"
@@ -49,7 +49,61 @@
                     :items       = "list.GetItems()"
                     item-text    = "label"
                     item-value   = "rowid"
+                    @change      = "uiSwitchSublists()"
                     />
+            </div>
+        </section>
+
+        <!-- ···························· FirstBA -->
+
+        <section class="FieldBlock" v-for="list in [FirstBA]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="controls">
+                <v-btn
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenSublistInEditor()"
+                    :disabled = "!uiIsSublistReady()"
+                    >Edit sub-list</v-btn>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    :placeholder = "
+                        !  PrimaryFocusLOB.uimodel
+                        ? `Select ${PrimaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
+            </div>
+        </section>
+
+        <!-- ···························· SecondBA -->
+
+        <section class="FieldBlock" v-for="list in [SecondBA]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    :placeholder = "
+                        !  PrimaryFocusLOB.uimodel
+                        ? `Select ${PrimaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
             </div>
         </section>
 
@@ -223,13 +277,23 @@
             list:  false,
             input: '',
         },
-    ...data}
+    ...data }
 
     methods = {
 
         uiOpenListInEditor (list) {
             let RNA = this
             RNA.$data.ui_editor = { state:true, input:'', list }
+        },
+
+        uiOpenSublistInEditor () {
+            let RNA = this
+
+            if ( !RNA.uiIsSublistReady() ) return false
+
+            let rowid = RNA.$data.PrimaryFocusLOB.uimodel
+            const row = RNA.$data.PrimaryFocusLOB.GetItem(rowid)
+            RNA.uiOpenListInEditor(row.child)
         },
 
         uiAddItemInEditor () {
@@ -244,6 +308,47 @@
 
             // update ui
             RNA.$data.ui_editor.input = ''   // reset text input
+        },
+
+        uiIsListOpen (list) {
+            let   RNA = this
+            const open = RNA.$data.ui_editor.state
+            const data = RNA.$data.ui_editor.list
+
+            // return class-name friendly
+            if ( !open||!data ) return ''
+            if ( !list )        return ''
+            if (  list.caption !== data.caption ) return ''
+            return 'is-open'
+        },
+
+        uiIsSublistReady () {
+            let RNA = this
+            return !!RNA.$data.PrimaryFocusLOB.uimodel
+        },
+
+        uiSwitchSublists () {
+            let   RNA = this
+            const PrimaryFocusLOB = RNA.$data.PrimaryFocusLOB
+            const FirstBA         = RNA.$data.FirstBA
+            const SecondBA        = RNA.$data.SecondBA
+
+            // define list to change
+            let rowid = PrimaryFocusLOB.uimodel
+            const row = PrimaryFocusLOB.GetItem(rowid)
+            if (!row.child) { // create new sublist
+                 row.child = new PrimaryFocusLOB.constructor({caption:row.label})
+            }
+
+            // reset ui state
+            FirstBA.uimodel  = null
+            SecondBA.uimodel = null
+
+            // sync sublists
+            FirstBA.rows     = row.child.rows || []
+            SecondBA.rows    = row.child.rows || []
+            FirstBA.current_caption  = row.child.caption || false
+            SecondBA.current_caption = row.child.caption || false
         },
 
     ...methods }
@@ -264,10 +369,13 @@ export default {
 </script>
 
 <style>
+    .SetFocusFields {
+        padding-bottom: 20vh;
+    }
     .FieldBlock {
         display: grid;
       --controls-gap:   10rem;
-      --design-gap:  -0.75rem;
+      --design-gap:   0.75rem;
         grid-row-gap: 0.25rem;
         grid-column-gap: var(--controls-gap);
         grid-template-columns: [a] auto [b] 10em [c];
@@ -275,12 +383,12 @@ export default {
             'title controls'
             'field controls';
     }
-    .FieldBlock > *         { grid-area: field }
-    .FieldBlock > .overline { grid-area: title }
-    .FieldBlock > .controls { grid-area: controls }
-    .FieldBlock   .selectbox {
-        margin-left: var(--design-gap);
-    }
+    .FieldBlock> *         { grid-area: field }
+    .FieldBlock> .overline { grid-area: title }
+    .FieldBlock> .controls { grid-area: controls }
+    .FieldBlock  .overline { padding-left: var(--design-gap); }
+    .FieldBlock  .is-open  { background-color: yellow; }
+
     @media screen and (max-width:60rem) {
         .FieldBlock {
           --controls-gap: 2rem;
