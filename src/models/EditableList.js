@@ -27,7 +27,8 @@ let EditableList = function (protein) {
 
 // ---------------------------- // API
 
-    RNA.GetList    = f     => RNA.GetOrderedList(f)
+    RNA.ExportList = f     => RNA.CurrentListExport(f)
+    RNA.GetItems   = f     => RNA.GetOrderedList(f)
     RNA.GetItem    = id    => RNA.Item_Read({rowid:id})
     RNA.CreateList = list  => RNA.List_Create(list)
     RNA.CreateItem = item  => RNA.Item_Create(item)
@@ -101,6 +102,24 @@ let EditableList = function (protein) {
         let rule = (a,b) => a.order > b.order
         let list = [...RNA.rows].sort(rule)
         return list
+    }
+
+    RNA.CurrentListExport = f => {
+        let caption = RNA.caption
+        let additem = item => { return {
+            id:    item.rowid || '',
+            label: item.label || '',
+        }}
+        let addlist = item => {
+            let list = item.child ? item.child.rows.map(additem) : []
+            if (list.length) return { ...additem(item), list }
+            else             return { ...additem(item) }
+        }
+        let list = RNA.rows.map(addlist)
+        return {
+            caption,
+            list,
+        }
     }
 
 

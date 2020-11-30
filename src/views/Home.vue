@@ -15,15 +15,15 @@
                 <v-btn
                     class  = "accent"
                     width  = "10rem"
-                    height = "5rem"
+                    height = "5.25rem"
                     @click = "uiOpenListInEditor(list)"
-                    >Edit sub-list</v-btn>
+                    >Edit list</v-btn>
             </div>
             <div class="selectbox">
                 <v-select solo
                     v-model      = "list.uimodel"
                     :placeholder = "list.placeholder"
-                    :items       = "list.GetList()"
+                    :items       = "list.GetItems()"
                     item-text    = "label"
                     item-value   = "rowid"
                     />
@@ -38,7 +38,7 @@
                 <v-btn
                     class  = "accent"
                     width  = "10rem"
-                    height = "5rem"
+                    height = "5.25rem"
                     @click = "uiOpenListInEditor(list)"
                     >Edit list</v-btn>
             </div>
@@ -46,7 +46,7 @@
                 <v-select solo
                     v-model      = "list.uimodel"
                     :placeholder = "list.placeholder"
-                    :items       = "list.GetList()"
+                    :items       = "list.GetItems()"
                     item-text    = "label"
                     item-value   = "rowid"
                     />
@@ -55,9 +55,69 @@
 
     </v-container>
 
+    <!-- list editor -->
+
+    <v-bottom-sheet flat scrollable
+        v-model="ui_editor.state"
+        content-class="pa-0">
+        <v-card flat tile>
+        <v-card-text class="pa-0">
+        <v-sheet tile class="accent white--text">
+        <v-container v-if="ui_editor.list">
+        <template v-for="list in [ui_editor.list]">
+
+            <h3 class="title pa-2 pt-0">
+                <div class="overline">List editor</div>
+                {{list.caption}}
+            </h3>
+
+            <section>
+
+                <!-- ···························· List Items -->
+
+                <div v-for="item in list.GetItems()"
+                    class="d-flex">
+                    <v-text-field solo hide-details
+                        v-model="item.label"
+                        placeholder="Text label"
+                        class="mb-1 mr-1"
+                        />
+                    <v-btn text class="white--text mt-1"
+                        @click="list.DeleteItem(item)"
+                        tabindex="-1"
+                        >remove</v-btn>
+                </div>
+
+                <!-- ···························· New Item -->
+
+                <footer class="add-new-row d-flex mt-6">
+                    <v-text-field solo hide-details
+                        class="mb-4 mr-1"
+                        ref="EditorInputText"
+                        v-model        = "ui_editor.input"
+                        placeholder    = "New text label"
+                        @keyup.enter   = "uiAddItemInEditor()" />
+                    <v-btn text @click = "uiAddItemInEditor()"
+                       :disabled       = "!ui_editor.input"
+                        class="white--text mt-1"
+                        >add option</v-btn>
+                </footer>
+
+                <!-- ···························· -->
+
+            </section>
+
+        </template>
+        </v-container>
+        </v-sheet>
+        </v-card-text>
+        </v-card>
+        </v-bottom-sheet>
+
+
     <!-- dev -->
 
-    <debug>
+    <debug class="pb-12">
 
         <v-container>
             <h2 class="mb-4">Developer area</h2>
@@ -69,10 +129,6 @@
 
         </v-container>
 
-        <v-container msg>
-            <div class="overline">msg</div>
-            <div display-source>{{msg||typeof(msg)}}</div>
-        </v-container>
         <v-container current-list-plain-view>
 
             <h4 class="overline">Current list plain view</h4>
@@ -91,9 +147,17 @@
                 </div>
             </div>
 
-            <header class="title">ui_editor.list</header>
-            <div display-source>{{ui_editor.list}}</div>
 
+        </v-container>
+
+        <v-container msg>
+            <div class="pb-2">
+                <v-btn small class="accent"
+                    @click="f=>{msg=ExportAll()}"
+                    >display export</v-btn>
+            </div>
+            <div class="overline">msg</div>
+            <div display-source>{{msg||typeof(msg)}}</div>
         </v-container>
 
     </debug>
@@ -127,12 +191,20 @@
     const  PrimaryFocusLOB = new EditableList({constructor: EditableList})
     const  FirstBA         = new EditableList({constructor: EditableList})
     const  SecondBA        = new EditableList({constructor: EditableList})
+
     data = {
         YourIndustry,
         PrimaryFocusLOB,
         FirstBA,
         SecondBA,
     ...data }
+
+    methods = {
+        ExportAll () { return [
+            YourIndustry.ExportList(),
+            PrimaryFocusLOB.ExportList(),
+        ]},
+    ...methods }
 
     // load data
 
@@ -158,6 +230,20 @@
         uiOpenListInEditor (list) {
             let RNA = this
             RNA.$data.ui_editor = { state:true, input:'', list }
+        },
+
+        uiAddItemInEditor () {
+            let RNA = this
+            let label = RNA.$data.ui_editor.input
+            let list  = RNA.$data.ui_editor.list
+
+            if (!label || !list) return false
+
+            // update model
+            list.CreateItem({label})
+
+            // update ui
+            RNA.$data.ui_editor.input = ''   // reset text input
         },
 
     ...methods }
