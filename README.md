@@ -49,4 +49,5 @@ git push origin master
 
 ...create model  - editable list
 ...create screen - list editor
+...publish checkpoint
 ```

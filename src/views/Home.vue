@@ -75,6 +75,7 @@
                     :items       = "list.GetItems()"
                     item-text    = "label"
                     item-value   = "rowid"
+                    :disabled    = "!uiIsSublistReady()"
                     :placeholder = "
                         !  PrimaryFocusLOB.uimodel
                         ? `Select ${PrimaryFocusLOB.caption} first`
@@ -97,7 +98,7 @@
                     :items        = "list.GetItems()"
                     item-text     = "label"
                     item-value    = "rowid"
-                    
+                    :disabled     = "!uiIsSublistReady()"
                     :placeholder  = "
                         !  PrimaryFocusLOB.uimodel
                         ? `Select ${PrimaryFocusLOB.caption} first`
@@ -135,8 +136,18 @@
                     <v-text-field solo hide-details
                         v-model="item.label"
                         placeholder="Text label"
-                        class="mb-1 mr-1"
+                        class="mb-1 mr-4"
                         />
+                    <v-btn text class="white--text mt-1 px-0"
+                        @click=""
+                        tabindex="-1"
+                        disabled
+                        ><v-icon>mdi-arrow-up</v-icon></v-btn>
+                    <v-btn text class="white--text mt-1"
+                        @click=""
+                        tabindex="-1"
+                        disabled
+                        ><v-icon>mdi-arrow-down</v-icon></v-btn>
                     <v-btn text class="white--text mt-1"
                         @click="list.DeleteItem(item)"
                         tabindex="-1"
@@ -228,8 +239,8 @@ First presentation complete
                     <div class="overline">code source</div>
                     <div><a href="https://github.com/zlsheepcity/emergn-walrus">github/emergn-walrus</a></div>
                     <ul>
-                        <li><a href="https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/EditableList.js">List model</a></li>
                         <li><a href="https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/ExampleList.js">List example</a></li>
+                        <li><a href="https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/EditableList.js">List model</a></li>
                     </ul>
                     
                 </section>
