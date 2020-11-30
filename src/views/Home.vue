@@ -9,8 +9,7 @@
 
         <!-- ···························· YourIndustry -->
 
-        <template v-for="list in [YourIndustry]">
-        <section class="FieldBlock">
+        <section class="FieldBlock" v-for="list in [YourIndustry]">
             <div class="overline">{{list.caption}}</div>
             <div class="controls">
                 <v-btn
@@ -24,18 +23,16 @@
                 <v-select solo
                     v-model      = "list.uimodel"
                     :placeholder = "list.placeholder"
-                    :items       = "list.getList()"
+                    :items       = "list.GetList()"
                     item-text    = "label"
                     item-value   = "rowid"
                     />
             </div>
         </section>
-        </template>
 
         <!-- ···························· PrimaryFocusLOB -->
 
-        <template v-for="list in [PrimaryFocusLOB]">
-        <section class="FieldBlock">
+        <section class="FieldBlock" v-for="list in [PrimaryFocusLOB]">
             <div class="overline">{{list.caption}}</div>
             <div class="controls">
                 <v-btn
@@ -49,13 +46,12 @@
                 <v-select solo
                     v-model      = "list.uimodel"
                     :placeholder = "list.placeholder"
-                    :items       = "list.getList()"
+                    :items       = "list.GetList()"
                     item-text    = "label"
                     item-value   = "rowid"
                     />
             </div>
         </section>
-        </template>
 
     </v-container>
 
@@ -95,8 +91,8 @@
                 </div>
             </div>
 
-            <header class="title">ui_editor</header>
-            <div display-source>{{ui_editor}}</div>
+            <header class="title">ui_editor.list</header>
+            <div display-source>{{ui_editor.list}}</div>
 
         </v-container>
 
@@ -142,10 +138,10 @@
 
     import ExampleList  from "@/models/ExampleList"
 
-    YourIndustry.createList({...ExampleList['YourIndustry']})
-    PrimaryFocusLOB.createList({...ExampleList['PrimaryFocusLOB']})
-    FirstBA.createList({...ExampleList['FirstBA']})
-    SecondBA.createList({...ExampleList['SecondBA']})
+    YourIndustry.CreateList({...ExampleList['YourIndustry']})
+    PrimaryFocusLOB.CreateList({...ExampleList['PrimaryFocusLOB']})
+    FirstBA.CreateList({...ExampleList['FirstBA']})
+    SecondBA.CreateList({...ExampleList['SecondBA']})
 
 // ---------------------------- ui actions
 
@@ -183,9 +179,10 @@ export default {
 
 <style>
     .FieldBlock {
+        display: grid;
       --controls-gap:   10rem;
       --design-gap:  -0.75rem;
-        display: grid;
+        grid-row-gap: 0.25rem;
         grid-column-gap: var(--controls-gap);
         grid-template-columns: [a] auto [b] 10em [c];
         grid-template-areas:

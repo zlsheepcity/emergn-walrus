@@ -3,7 +3,7 @@
 
         <header>
             <v-container>
-                <h2 class="px-2">Set Focus...</h2>
+                <h2 class="px-2">Set Focus... (deprecated)</h2>
             </v-container>
         </header>
 
