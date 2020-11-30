@@ -1,11 +1,27 @@
 # emergn-walrus 0.0.2
-Started: Nov 24, 2020 (international walrus day)
+Started: Nov 24, 2020 (international walrus day)  
+Status: First presentation complete
 
-## Browser Demo
+## Features
+- Load list
+- Edit list
+- Editor: create, update, delete item
+
+## Todo
+- Save/Update DataBase
+- Editor: change order
+
+## Demo
 https://zlsheepcity.github.io/emergn-walrus/dist/
 
-
 ## Code
+https://github.com/zlsheepcity/emergn-walrus
+
+- [List model](https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/EditableList.js)
+- [List example](https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/ExampleList.js)
+
+
+### Develop
 
 
 ```BASH
@@ -16,7 +32,7 @@ npm run build
 [Vue CLI Configuration Reference](https://cli.vuejs.org/config/)
 
 
-## Project log
+### Project log
 
 
 ```BASH

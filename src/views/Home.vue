@@ -93,11 +93,12 @@
                 >{{list.caption}}</div>
             <div class="selectbox">
                 <v-select solo
-                    v-model      = "list.uimodel"
-                    :items       = "list.GetItems()"
-                    item-text    = "label"
-                    item-value   = "rowid"
-                    :placeholder = "
+                    v-model       = "list.uimodel"
+                    :items        = "list.GetItems()"
+                    item-text     = "label"
+                    item-value    = "rowid"
+                    
+                    :placeholder  = "
                         !  PrimaryFocusLOB.uimodel
                         ? `Select ${PrimaryFocusLOB.caption} first`
                         :  list.GetItems().length
@@ -173,45 +174,67 @@
 
     <debug class="pb-12">
 
-        <v-container>
-            <h2 class="mb-4">Developer area</h2>
+        <v-container class="d-flex justify-space-between">
+            <section>
 
-<!--
-            <header class="title">PrimaryFocusLOB</header>
-            <div display-source>{{PrimaryFocusLOB}}</div>
--->
+                <h2 class="mb-4">Developer area</h2>
 
-        </v-container>
-
-        <v-container current-list-plain-view>
-
-            <h4 class="overline">Current list plain view</h4>
-
-            <div class="pt-0"><b>{{YourIndustry.caption}}</b></div>
-            <div v-for="rowitem in YourIndustry.rows" class="pl-4" >
-                <div>{{ rowitem.label }}</div>
-            </div>
-            <div class="pt-2"><b>{{PrimaryFocusLOB.caption}}</b></div>
-            <div v-for="rowitem in PrimaryFocusLOB.rows" class="pl-4">
-                <div>{{ rowitem.label }}</div>
-                <div v-if="rowitem.child" class="pl-4">
-                    <div v-for="subitem in rowitem.child.rows">
-                        <div>{{ subitem.label }}</div>
+                <section class="pb-4">
+                    <h4 class="overline">Current list plain view</h4>
+                    <div class="pt-0"><b>{{YourIndustry.caption}}</b></div>
+                    <div v-for="rowitem in YourIndustry.rows" class="pl-4" >
+                        <div>{{ rowitem.label }}</div>
                     </div>
-                </div>
-            </div>
+                    <div class="pt-2"><b>{{PrimaryFocusLOB.caption}}</b></div>
+                    <div v-for="rowitem in PrimaryFocusLOB.rows" class="pl-4">
+                        <div>{{ rowitem.label }}</div>
+                        <div v-if="rowitem.child" class="pl-4">
+                            <div v-for="subitem in rowitem.child.rows">
+                                <div>{{ subitem.label }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
+                <section class="pb-1">
+                    <v-btn small class="accent"
+                        @click="f=>{msg=ExportAll()}"
+                        >display export</v-btn>
+                </section>
 
-        </v-container>
+                <section>
+                    <div class="overline">msg</div>
+                    <div display-source>{{msg||typeof(msg)}}</div>
+                </section>
 
-        <v-container msg>
-            <div class="pb-2">
-                <v-btn small class="accent"
-                    @click="f=>{msg=ExportAll()}"
-                    >display export</v-btn>
-            </div>
-            <div class="overline">msg</div>
-            <div display-source>{{msg||typeof(msg)}}</div>
+            </section>
+            <section>
+
+                <section>
+                    <div class="overline">status</div>
+                    <pre display-source>
+First presentation complete
+
+## Features
+- Load list
+- Edit list
+- Editor: create, update, delete item
+
+## Todo
+- Save/Update DataBase
+- Editor: change order
+                    </pre>
+
+                    <div class="overline">code source</div>
+                    <div><a href="https://github.com/zlsheepcity/emergn-walrus">github/emergn-walrus</a></div>
+                    <ul>
+                        <li><a href="https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/EditableList.js">List model</a></li>
+                        <li><a href="https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/ExampleList.js">List example</a></li>
+                    </ul>
+                    
+                </section>
+
+            </section>
         </v-container>
 
     </debug>
