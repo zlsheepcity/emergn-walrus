@@ -17,7 +17,7 @@
             </v-chip>
 
             <h1 class="text-h4">
-                1/3  Set Focus for Value Starter Engagement
+                2/3 Confirm financial data for the Benefit case
             </h1>
             <p class="subtitle">Define priorities</p>
 
@@ -39,10 +39,10 @@
             <v-row dense align-content="stretch">
 
                 <v-col  cols="12" md="4">
-                <walrus-card :disabled="false" :action="f=>goto('PageM0-FinancialData')">
+                <walrus-card :disabled="false" :action="f=>goto('PageM0-ITstrategy')">
                     <p>Next</p>
                     <div class="headline">
-                        Confirm financial data for the Benefit case
+                        Assess your IT strategy?
                     </div>
                 </walrus-card>
                 </v-col>
@@ -74,7 +74,7 @@
 // ---------------------------- export ready
 
 export default {
-    name: 'Module-0-1',
+    name: 'Module-0-2',
     props,
     components,
     methods,

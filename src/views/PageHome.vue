@@ -29,7 +29,7 @@
                 <walrus-card :disabled="false" :action="f=>goto('PageM0')">
                     <p>Module 0</p>
                     <div class="headline">
-                        Customer Self Assessment
+                        Guided Customer Assessment
                     </div>
                 </walrus-card>
                 </v-col>

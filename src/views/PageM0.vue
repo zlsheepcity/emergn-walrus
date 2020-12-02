@@ -14,7 +14,7 @@
             </v-chip>
 
             <h1 class="text-h4">
-                Customer Self Assessment
+                Guided Customer Assessment
             </h1>
 
            </header>
@@ -30,7 +30,7 @@
                 <v-col  cols="12" md="3">
                 <walrus-card :disabled="false" :action="f=>goto('PageM0-SetFocus')">
                     <div class="headline">
-                        Start the self assesment
+                        Start the Guided Customer Assessment
                     </div>
                 </walrus-card>
                 </v-col>

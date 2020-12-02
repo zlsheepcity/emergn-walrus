@@ -55,6 +55,20 @@ routes = [
             name:                'PageM0-SetFocus',
             path:               '/PageM0-SetFocus',
     },
+    {
+        component: () => import(
+            /* webpackChunkName: "PageM0-FinancialData" */
+                        '../views/PageM0-FinancialData.vue'),
+            name:                'PageM0-FinancialData',
+            path:               '/PageM0-FinancialData',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "PageM0-ITstrategy" */
+                        '../views/PageM0-ITstrategy.vue'),
+            name:                'PageM0-ITstrategy',
+            path:               '/PageM0-ITstrategy',
+    },
 
 ...routes ]
 
