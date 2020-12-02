@@ -18,6 +18,12 @@ import debug   from './framework/debug';
 Vue.component( 'wrap',  wrap  )
 Vue.component( 'debug', debug )
 
+// project
+
+import WalrusCard from './components/walrus-card';
+Vue.component( 'walrus-card',  WalrusCard  )
+
+
 // app
 
 import App from './App.vue'

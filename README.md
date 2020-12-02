@@ -3,11 +3,18 @@ Started: Nov 24, 2020 (international walrus day)
 Status: First presentation complete
 
 ## Features
+
+Prototype screens
+- https://zlsheepcity.github.io/emergn-walrus/dist/#/PageIntro
+
+Admin Tool
 - Load list
 - Edit list
 - Editor: create, update, delete item
 
 ## Todo
+
+Admin Tool
 - Save/Update DataBase
 - Editor: change order
 

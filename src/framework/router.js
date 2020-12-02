@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+let routes = [
   {
     path: '/',
     name: 'Home',
@@ -21,6 +21,42 @@ const routes = [
     }
   }
 ]
+
+// Project Pages
+
+routes = [
+
+    {
+        component: () => import(
+            /* webpackChunkName: "PageIntro" */
+                        '../views/PageIntro.vue'),
+            name:                'PageIntro',
+            path:               '/PageIntro',
+            alias:              '/start',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "PageHome" */
+                        '../views/PageHome.vue'),
+            name:                'PageHome',
+            path:               '/PageHome',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "PageM0" */
+                        '../views/PageM0.vue'),
+            name:                'PageM0',
+            path:               '/PageM0',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "PageM0-SetFocus" */
+                        '../views/PageM0-SetFocus.vue'),
+            name:                'PageM0-SetFocus',
+            path:               '/PageM0-SetFocus',
+    },
+
+...routes ]
 
 const router = new VueRouter({
   routes

@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <home-view/>
+        <router-view/>
     </v-app>
 </template>
 
@@ -36,3 +36,9 @@ export default {
 
 // ---------------------------- end script
 </script>
+
+
+<style>
+    /* fix annoying vuetify settings */
+    .headline { word-break:normal }
+</style>
