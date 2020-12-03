@@ -28,7 +28,7 @@
             <v-row dense align-content="stretch">
 
                 <v-col  cols="12" md="3">
-                <walrus-card :disabled="false" :action="f=>goto('PageM0-SetFocus')">
+                <walrus-card :disabled="false" :action="f=>goto('PageM0-Form')">
                     <div class="headline">
                         Start the Guided Customer Assessment
                     </div>

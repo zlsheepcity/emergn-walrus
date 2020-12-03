@@ -50,6 +50,16 @@ routes = [
     },
     {
         component: () => import(
+            /* webpackChunkName: "PageM0-Form" */
+                        '../views/PageM0-Form.vue'),
+            name:                'PageM0-Form',
+            path:               '/PageM0-Form',
+    },
+
+// deprecated
+
+    {
+        component: () => import(
             /* webpackChunkName: "PageM0-SetFocus" */
                         '../views/PageM0-SetFocus.vue'),
             name:                'PageM0-SetFocus',

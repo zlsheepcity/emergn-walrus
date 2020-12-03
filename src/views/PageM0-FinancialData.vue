@@ -19,7 +19,6 @@
             <h1 class="text-h4">
                 2/3 Confirm financial data for the Benefit case
             </h1>
-            <p class="subtitle">Define priorities</p>
 
            </header>
         </v-container>

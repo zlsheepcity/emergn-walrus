@@ -7,7 +7,8 @@ export default new Vuetify({
     theme: {
         themes: {
             light: {
-                accent: '#ae2d2f', // noble red
+                accent: '#ae2d2f', // noble red,
+                success: '#666666',
             }
         }
     }

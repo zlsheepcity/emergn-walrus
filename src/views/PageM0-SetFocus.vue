@@ -19,7 +19,30 @@
             <h1 class="text-h4">
                 1/3  Set Focus for Value Starter Engagement
             </h1>
-            <p class="subtitle">Define priorities</p>
+
+           </header>
+        </v-container>
+
+    </header>
+
+    <header class="page-header">
+
+        <v-container>
+            <header class="px-3">
+
+            <v-chip small class="overline pr-4 mr-2" @click="f=>goto('PageIntro')">
+                ► Intro
+            </v-chip>
+            <v-chip small class="overline pr-4 mr-2" @click="f=>goto('PageHome')">
+                ► Home
+            </v-chip>
+            <v-chip small class="overline pr-4 mr-2" @click="f=>goto('PageM0')">
+                ► Guided Customer Assessment
+            </v-chip>
+
+            <h1 class="text-h4">
+                1/3  Set Focus for Value Starter Engagement
+            </h1>
 
            </header>
         </v-container>

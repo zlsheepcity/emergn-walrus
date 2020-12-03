@@ -41,4 +41,5 @@ export default {
 <style>
     /* fix annoying vuetify settings */
     .headline { word-break:normal }
+    .v-application .overline { line-height:1.5 }
 </style>

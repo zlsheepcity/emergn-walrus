@@ -19,7 +19,6 @@
             <h1 class="text-h4">
                 3/3 Assess your IT strategy?
             </h1>
-            <p class="subtitle">Define priorities</p>
 
            </header>
         </v-container>
