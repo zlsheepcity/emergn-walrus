@@ -51,6 +51,34 @@ let ExampleList = {
         placeholder: 'Select from list',
     },
 
+    SecondaryFocusLOB: {
+        caption:     'Secondary Focus LOB',
+        placeholder: 'Select from list',
+        list: [
+            {
+              label: 'Asset Management',
+              code:  'FLOB1',
+              list:  [
+                  { label: 'BA x for Asset Management', code:'FLOB1_1' },
+                  { label: 'BA y for Asset Management', code:'FLOB1_2' },
+                  { label: 'BA z for Asset Management', code:'FLOB1_3' },
+              ],
+            },
+            {
+              label: 'Finance',
+              code:  'FLOB2',
+              list:  [
+                  { label: 'BA x for Finance', code:'FLOB2_1' },
+                  { label: 'BA y for Finance', code:'FLOB2_2' },
+                  { label: 'BA z for Finance', code:'FLOB2_3' },
+              ],
+            },
+            { label: 'Manufacturing', code:'FLOB3' },
+            { label: 'Sales', code:'FLOB4' },
+            { label: 'Sourcing & Procurement', code:'FLOB5' },
+            { label: 'Supply Chain', code:'FLOB6' },
+        ],
+    },
 }
 
 export default ExampleList

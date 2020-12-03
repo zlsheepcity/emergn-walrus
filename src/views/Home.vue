@@ -49,7 +49,7 @@
                     :items       = "list.GetItems()"
                     item-text    = "label"
                     item-value   = "rowid"
-                    @change      = "uiSwitchSublists()"
+                    @change      = "uiSwitchSublists(PrimaryFocusLOB, FirstBA, SecondBA)"
                     />
             </div>
         </section>
@@ -65,8 +65,8 @@
                     class  = "accent"
                     width  = "10rem"
                     height = "5.25rem"
-                    @click = "uiOpenSublistInEditor()"
-                    :disabled = "!uiIsSublistReady()"
+                    @click = "uiOpenSublistInEditor(PrimaryFocusLOB)"
+                    :disabled = "!uiIsSublistReady(PrimaryFocusLOB)"
                     >Edit sub-list</v-btn>
             </div>
             <div class="selectbox">
@@ -75,7 +75,7 @@
                     :items       = "list.GetItems()"
                     item-text    = "label"
                     item-value   = "rowid"
-                    :disabled    = "!uiIsSublistReady()"
+                    :disabled    = "!uiIsSublistReady(PrimaryFocusLOB)"
                     :placeholder = "
                         !  PrimaryFocusLOB.uimodel
                         ? `Select ${PrimaryFocusLOB.caption} first`
@@ -98,10 +98,90 @@
                     :items        = "list.GetItems()"
                     item-text     = "label"
                     item-value    = "rowid"
-                    :disabled     = "!uiIsSublistReady()"
+                    :disabled     = "!uiIsSublistReady(PrimaryFocusLOB)"
                     :placeholder  = "
                         !  PrimaryFocusLOB.uimodel
                         ? `Select ${PrimaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
+            </div>
+        </section>
+
+        <!-- ···························· SecondaryFocusLOB -->
+        <v-divider class="pt-5"></v-divider>
+
+        <section class="FieldBlock" v-for="list in [SecondaryFocusLOB]">
+            <div class="overline"  :class="uiIsListOpen(list)">{{list.caption}}</div>
+            <div class="controls">
+                <v-btn
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenListInEditor(list)"
+                    >Edit list</v-btn>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :placeholder = "list.placeholder"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    @change      = "uiSwitchSublists(SecondaryFocusLOB, FirstBASecondary, SecondBASecondary)"
+                    />
+            </div>
+        </section>
+
+        <!-- ···························· FirstBASecondary -->
+
+        <section class="FieldBlock" v-for="list in [FirstBASecondary]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="controls">
+                <v-btn
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenSublistInEditor(SecondaryFocusLOB)"
+                    :disabled = "!uiIsSublistReady(SecondaryFocusLOB)"
+                    >Edit sub-list</v-btn>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    :disabled    = "!uiIsSublistReady(SecondaryFocusLOB)"
+                    :placeholder = "
+                        !  SecondaryFocusLOB.uimodel
+                        ? `Select ${SecondaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
+            </div>
+        </section>
+
+        <!-- ···························· SecondBASecondary -->
+
+        <section class="FieldBlock" v-for="list in [SecondBASecondary]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model       = "list.uimodel"
+                    :items        = "list.GetItems()"
+                    item-text     = "label"
+                    item-value    = "rowid"
+                    :disabled     = "!uiIsSublistReady(SecondaryFocusLOB)"
+                    :placeholder  = "
+                        !  SecondaryFocusLOB.uimodel
+                        ? `Select ${SecondaryFocusLOB.caption} first`
                         :  list.GetItems().length
                            ?  list.placeholder
                            : `List is empty`
@@ -139,14 +219,14 @@
                         class="mb-1 mr-4"
                         />
                     <v-btn text class="white--text mt-1 px-0"
-                        @click=""
+                        @click="list.MoveItemUp(item)"
                         tabindex="-1"
-                        disabled
+                        :disabled = "item.rowid === 1"
                         ><v-icon>mdi-arrow-up</v-icon></v-btn>
                     <v-btn text class="white--text mt-1"
-                        @click=""
+                        @click="list.MoveItemDown(item)"
                         tabindex="-1"
-                        disabled
+                        :disabled = "item.rowid === list.GetItems().length"
                         ><v-icon>mdi-arrow-down</v-icon></v-btn>
                     <v-btn text class="white--text mt-1"
                         @click="list.DeleteItem(item)"
@@ -198,6 +278,15 @@
                     </div>
                     <div class="pt-2"><b>{{PrimaryFocusLOB.caption}}</b></div>
                     <div v-for="rowitem in PrimaryFocusLOB.rows" class="pl-4">
+                        <div>{{ rowitem.label }}</div>
+                        <div v-if="rowitem.child" class="pl-4">
+                            <div v-for="subitem in rowitem.child.rows">
+                                <div>{{ subitem.label }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2"><b>{{SecondaryFocusLOB.caption}}</b></div>
+                    <div v-for="rowitem in SecondaryFocusLOB.rows" class="pl-4">
                         <div>{{ rowitem.label }}</div>
                         <div v-if="rowitem.child" class="pl-4">
                             <div v-for="subitem in rowitem.child.rows">
@@ -279,18 +368,25 @@ First presentation complete
     const  PrimaryFocusLOB = new EditableList({constructor: EditableList})
     const  FirstBA         = new EditableList({constructor: EditableList})
     const  SecondBA        = new EditableList({constructor: EditableList})
+    const  SecondaryFocusLOB = new EditableList({constructor: EditableList})
+    const  FirstBASecondary  = new EditableList({constructor: EditableList})
+    const  SecondBASecondary = new EditableList({constructor: EditableList})
 
     data = {
         YourIndustry,
         PrimaryFocusLOB,
         FirstBA,
         SecondBA,
+        SecondaryFocusLOB,
+        FirstBASecondary,
+        SecondBASecondary,
     ...data }
 
     methods = {
         ExportAll () { return [
             YourIndustry.ExportList(),
             PrimaryFocusLOB.ExportList(),
+            SecondaryFocusLOB.ExportList(),
         ]},
     ...methods }
 
@@ -302,6 +398,9 @@ First presentation complete
     PrimaryFocusLOB.CreateList({...ExampleList['PrimaryFocusLOB']})
     FirstBA.CreateList({...ExampleList['FirstBA']})
     SecondBA.CreateList({...ExampleList['SecondBA']})
+    SecondaryFocusLOB.CreateList({...ExampleList['SecondaryFocusLOB']})
+    FirstBASecondary.CreateList({...ExampleList['FirstBA']})
+    SecondBASecondary.CreateList({...ExampleList['SecondBA']})
 
 // ---------------------------- ui actions
 
@@ -320,13 +419,13 @@ First presentation complete
             RNA.$data.ui_editor = { state:true, input:'', list }
         },
 
-        uiOpenSublistInEditor () {
+        uiOpenSublistInEditor (focusLOB) {
             let RNA = this
 
-            if ( !RNA.uiIsSublistReady() ) return false
+            if ( !RNA.uiIsSublistReady(focusLOB) ) return false
 
-            let rowid = RNA.$data.PrimaryFocusLOB.uimodel
-            const row = RNA.$data.PrimaryFocusLOB.GetItem(rowid)
+            let rowid = focusLOB.uimodel
+            const row = focusLOB.GetItem(rowid)
             RNA.uiOpenListInEditor(row.child)
         },
 
@@ -356,22 +455,22 @@ First presentation complete
             return 'is-open'
         },
 
-        uiIsSublistReady () {
+        uiIsSublistReady (focusLOB) {
             let RNA = this
-            return !!RNA.$data.PrimaryFocusLOB.uimodel
+            return !!focusLOB.uimodel
         },
 
-        uiSwitchSublists () {
+        uiSwitchSublists (focusLOB, firstBA, secondBA) {
             let   RNA = this
-            const PrimaryFocusLOB = RNA.$data.PrimaryFocusLOB
-            const FirstBA         = RNA.$data.FirstBA
-            const SecondBA        = RNA.$data.SecondBA
+            const FocusLOB = focusLOB
+            const FirstBA  = firstBA
+            const SecondBA = secondBA
 
             // define list to change
-            let rowid = PrimaryFocusLOB.uimodel
-            const row = PrimaryFocusLOB.GetItem(rowid)
+            let rowid = FocusLOB.uimodel
+            const row = FocusLOB.GetItem(rowid)
             if (!row.child) { // create new sublist
-                 row.child = new PrimaryFocusLOB.constructor({caption:row.label})
+                 row.child = new FocusLOB.constructor({caption:row.label})
             }
 
             // reset ui state
