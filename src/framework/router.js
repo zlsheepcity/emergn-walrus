@@ -55,6 +55,13 @@ routes = [
             name:                'PageM0-Form',
             path:               '/PageM0-Form',
     },
+    {
+        component: () => import(
+            /* webpackChunkName: "PageM0-2-FinancialData" */
+                        '../views/PageM0-2-FinancialData.vue'),
+            name:                'PageM0-2-FinancialData',
+            path:               '/PageM0-2-FinancialData',
+    },
 
 // deprecated
 
