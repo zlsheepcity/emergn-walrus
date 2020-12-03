@@ -32,7 +32,7 @@
             <v-stepper alt-labels v-model="e1">
             <v-stepper-header flat>
 
-                <v-stepper-step step="1" style="flex-basis: 20vw;">
+                <v-stepper-step step="1" style="flex-basis: 16rem;">
                     <div style="text-align:center;max-width:11em;">
                         Set Focus for Value Starter Engagement
                         </div>
@@ -40,7 +40,7 @@
 
                 <v-divider/>
 
-                <v-stepper-step step="2" style="flex-basis: 20vw;">
+                <v-stepper-step step="2" style="flex-basis: 16rem;">
                     <div style="text-align:center;max-width:11em;">
                         Confirm financial data for the Benefit case
                         </div>
@@ -48,7 +48,7 @@
 
                 <v-divider/>
 
-                <v-stepper-step step="3" style="flex-basis: 20vw;">
+                <v-stepper-step step="3" style="flex-basis: 16rem;">
                     <div style="text-align:center;max-width:11em;">
                         Assess your IT strategy?
                         </div>
@@ -346,7 +346,9 @@
             <v-card tile flat>
             <v-divider/>
             <v-card-actions class="py-8">
-                <v-btn color="primary">next</v-btn>
+                <v-btn color="primary" x-large disabled>
+                    next
+                    </v-btn>
             </v-card-actions>
             </v-card>
 

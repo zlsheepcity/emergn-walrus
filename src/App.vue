@@ -42,4 +42,7 @@ export default {
     /* fix annoying vuetify settings */
     .headline { word-break:normal }
     .v-application .overline { line-height:1.5 }
+    @media (min-width: 1904px) {
+        .container { max-width: 1185px; }
+    }
 </style>
