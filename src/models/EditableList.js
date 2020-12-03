@@ -48,6 +48,8 @@ let EditableList = function (protein) {
     RNA.CreateItem = item  => RNA.Item_Create(item)
     RNA.DeleteItem = item  => RNA.Item_Delete(item)
     RNA.UpdateItem = item  => RNA.Item_Update(item)
+    RNA.MoveItemUp = item  => RNA.Item_MoveUp(item)
+    RNA.MoveItemDown = item  => RNA.Item_MoveDown(item)
 
     // DB API
 
@@ -55,6 +57,8 @@ let EditableList = function (protein) {
         UpdateList:  list => false,
         UpdateItem:  item => false,
         DeleteItem:  item => false,
+        MoveItemUp:  item => false,
+        MoveItemDown:  item => false,
     }
 
 // ---------------------------- // Workers
@@ -128,6 +132,32 @@ let EditableList = function (protein) {
         RNA.DB.DeleteItem( {rowid} )
     }
 
+    RNA.Item_MoveUp = item => {
+        let { rowid } = item
+        const index   = RNA.wGetIndexById(rowid)
+
+        if  ( index === false ) return false
+        
+        const previousItemLabel = RNA.rows[index - 1].label
+        RNA.rows[index - 1].label = RNA.rows[index].label
+        RNA.rows[index].label = previousItemLabel
+
+        RNA.DB.MoveItemUp( {rowid} )
+    }
+
+    RNA.Item_MoveDown = item => {
+        let { rowid } = item;
+        const index   = RNA.wGetIndexById(rowid);
+
+        if  ( index === false ) return false;
+        
+        const nextItemLabel = RNA.rows[index + 1].label;
+        RNA.rows[index + 1].label = RNA.rows[index].label;
+        RNA.rows[index].label = nextItemLabel;
+
+        RNA.DB.MoveItemDown( {rowid} )
+    }
+    
     // export
 
     RNA.GetOrderedList = f => {
