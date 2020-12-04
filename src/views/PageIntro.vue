@@ -16,16 +16,30 @@
     <section>
         <v-container>
 
+        <debug class="pa-3">
+            <header class="overline">*issue authorization protocol</header>
+            <v-btn  class="accent mt-4"
+                @click="page.next.ready = true"
+                >unlock demo access</v-btn>
+        </debug>
+
+        </v-container>
+    </section>
+
+    <section>
+        <v-container>
+
             <v-row dense align-content="stretch">
 
                 <v-col  cols="12" md="4">
-                <walrus-card :disabled="false" :action="f=>goto('PageHome')">
+                <walrus-card
+                    :disabled="!page.next.ready"
+                    :action="f=>goto(page.next.link)">
                     <div class="headline">
-                        Enter with authorization
+                        Enter SAP Value Starter
                     </div>
                 </walrus-card>
                 </v-col>
-
 
             </v-row>
 
@@ -48,8 +62,14 @@
 // ---------------------------- main logic
 
     // use router
-    computed = { ...computed, router ()   { return this.$router } }
-    methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
+    computed = { router ()   { return this.$router }, ...computed }
+    methods  = { goto (path) { return this.$router.push(path) }, ...methods }
+
+    // use page
+    import PageCommander from '@/models/PageCommander'
+    data = {
+        page: PageCommander.Pages()['PageIntro'],
+    ...data }
 
 // ---------------------------- export ready
 
