@@ -23,6 +23,8 @@ Vue.component( 'debug', debug )
 import WalrusCard from './components/walrus-card';
 Vue.component( 'walrus-card',  WalrusCard  )
 
+import NumberInput from './components/number-input';
+Vue.component( 'number-input',  NumberInput  )
 
 // app
 
