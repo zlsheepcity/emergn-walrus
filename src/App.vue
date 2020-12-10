@@ -16,11 +16,7 @@
 
 // ---------------------------- main logic
 
-    import HomeView from "@/views/Home.vue"
-    components = {  HomeView, ...components }
 
-/*    import SetFocusView from "@/views/SetFocus.vue"
-    components = { ...components, SetFocusView }*/
 
 // ---------------------------- export ready
 
