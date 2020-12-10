@@ -1,31 +1,17 @@
 # emergn-walrus 0.0.2
 Started: Nov 24, 2020 (international walrus day)  
-Status: First presentation complete
+Status:  First presentation complete
 
 ## Features
 
-Prototype screens
-- https://zlsheepcity.github.io/emergn-walrus/dist/#/PageIntro
-
-Admin Tool
-- Load list
-- Edit list
-- Editor: create, update, delete item
-
-## Todo
-
-Admin Tool
-- Save/Update DataBase
-- Editor: change order
+Module-0 clickable screens
 
 ## Demo
-https://zlsheepcity.github.io/emergn-walrus/dist/
+https://zlsheepcity.github.io/emergn-walrus/dist/#/Welcome
 
 ## Code
 https://github.com/zlsheepcity/emergn-walrus
 
-- [List model](https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/EditableList.js)
-- [List example](https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/ExampleList.js)
 
 
 ### Develop
@@ -57,4 +43,7 @@ git push origin master
 ...create model  - editable list
 ...create screen - list editor
 ...publish checkpoint
+
+...create model - page navigation
+...create forms - Module-0
 ```

@@ -1,25 +1,25 @@
 <template>
     <wrap>
 
-<!-- ===================================== HEADER -->
+    <!-- ···························· HEADER -->
 
     <section class="page-header">
     <v-container>
     <header class="px-3">
 
 
-        <v-chip small class="overline pr-4 mr-2" @click="f=>GoTo('Dev_home')">
+        <v-chip small class="overline pr-4 mr-2" @click="f=>goto('Dev_home')">
             ► dev home
         </v-chip>
         <h1 class="text-h2">
-            dev blog
+            Dev blog
         </h1>
 
     </header>
     </v-container>
     </section>
 
-<!-- ===================================== PROJECT LINKS -->
+    <!-- ···························· PROJECT LINKS -->
 
     </wrap>
 </template>
@@ -38,7 +38,7 @@
 
     // use router
     computed = { ...computed, Router ()   { return this.$router } }
-    methods  = { ...methods,  GoTo (path) { return this.$router.push(path) } }
+    methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
 
 
 // ---------------------------- export ready

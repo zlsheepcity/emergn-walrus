@@ -1,5 +1,50 @@
 let Routes = [
 
+    // project
+
+    {
+        component: () => import(
+            /* webpackChunkName: "Welcome" */
+                        '../views/Welcome.vue'),
+            name:                'Welcome',
+            path:               '/Welcome',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "Home" */
+                        '../views/Home.vue'),
+            name:                'Home',
+            path:               '/Home',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "Module0" */
+                        '../views/Module0.vue'),
+            name:                'Module0',
+            path:               '/Module0',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "Module0-1" */
+                        '../views/Module0-1.vue'),
+            name:                'Module0-1',
+            path:               '/Module0-1',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "Module0-2" */
+                        '../views/Module0-2.vue'),
+            name:                'Module0-2',
+            path:               '/Module0-2',
+    },
+    {
+        component: () => import(
+            /* webpackChunkName: "Module0-3" */
+                        '../views/Module0-3.vue'),
+            name:                'Module0-3',
+            path:               '/Module0-3',
+    },
+
     // dev hq
 
     {
@@ -21,9 +66,9 @@ let Routes = [
 
     {
         component: () => import(
-            /* webpackChunkName: "Dev_blog" */
+            /* webpackChunkName: "Dev_blogpost" */
                         '../views/Dev_blog.vue'),
-            name:                'Dev_blog',
+            name:                'Dev_blogpost',
             path:               '/Dev_blog/:pageid',
             props: true, // props = [ ...props, 'pageid' ]
     },

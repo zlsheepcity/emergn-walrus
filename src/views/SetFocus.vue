@@ -1,160 +1,235 @@
 <template>
     <wrap>
 
-        <header>
-            <v-container>
-                <h2 class="px-2">Set Focus... (deprecated)</h2>
-            </v-container>
-        </header>
+    <static-header/>
 
     <!-- fields -->
 
-    <v-container>
+    <v-container class="SetFocusFields">
 
         <!-- ···························· YourIndustry -->
 
-        <div class="FieldBlock">
-            <h4 class="overline px-3"
-                :class="{'yellow':ListInEditor(YourIndustry)}"
-                >{{YourIndustry.caption}}</h4>
-            <v-select solo
-                :placeholder= "YourIndustry.placeholder"
-                :items=       "YourIndustry.getList()"
-                item-text=    "label"
-                />
-            <div class="edit-controls">
+        <section class="FieldBlock" v-for="list in [YourIndustry]">
+            <div class="overline"  :class="uiIsListOpen(list)">{{list.caption}}</div>
+            <div class="controls">
                 <v-btn
-                    class  = "accent mt-1"
-                    width  = "100%"
-                    height = "5.8em"
-                    style  = "transform: translateY(-2.5em)"
-                    @click = "OpenInEditor(YourIndustry)"
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenListInEditor(list)"
                     >Edit list</v-btn>
-                </div>
-        </div>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :placeholder = "list.placeholder"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    />
+            </div>
+        </section>
 
         <!-- ···························· PrimaryFocusLOB -->
 
-        <div class="FieldBlock">
-            <h4 class="overline px-3"
-                :class="{'yellow':ListInEditor(PrimaryFocusLOB)}"
-                >{{PrimaryFocusLOB.caption}}</h4>
-            <v-select solo
-                v-model      = "PrimaryFocusLOB.uimodel"
-                :placeholder = "PrimaryFocusLOB.placeholder"
-                :items       = "PrimaryFocusLOB.getList()"
-                item-text    = "label"
-                item-value   = "rowid"
-                @change      = "SynchronizeLists()"
-                />
-            <div class="edit-controls">
+        <section class="FieldBlock" v-for="list in [PrimaryFocusLOB]">
+            <div class="overline"  :class="uiIsListOpen(list)">{{list.caption}}</div>
+            <div class="controls">
                 <v-btn
-                    class  = "accent mt-1"
-                    width  = "100%"
-                    height = "5.8em"
-                    style  = "transform: translateY(-2.5em)"
-                    @click = "OpenInEditor(PrimaryFocusLOB)"
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenListInEditor(list)"
                     >Edit list</v-btn>
-                </div>
-        </div>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :placeholder = "list.placeholder"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    @change      = "uiSwitchSublists(PrimaryFocusLOB, FirstBA, SecondBA)"
+                    />
+            </div>
+        </section>
 
         <!-- ···························· FirstBA -->
 
-        <div class="FieldBlock">
-            <h4 class = "overline px-3"
-               :class = "{
-                   'yellow':
-                    ListInEditor({
-                       caption:
-                           PrimaryFocusLOB.getItem(PrimaryFocusLOB.uimodel)
-                        && PrimaryFocusLOB.getItem(PrimaryFocusLOB.uimodel).label
-                    })
-                }"
-               >{{FirstBA.caption}}</h4>
-            <v-select solo
-                v-model     = "FirstBA.uimodel"
-                item-text   = "label"
-                item-value   = "rowid"
-               :items       = "FirstBA.getList()"
-               :disabled    = "!PrimaryFocusLOB.uimodel"
-               :placeholder = "
-                   !  PrimaryFocusLOB.uimodel
-                   ? `Select ${PrimaryFocusLOB.caption} first`
-                   :  FirstBA.getList().length
-                      ? FirstBA.placeholder
-                      : 'List is empty'
-                   "/>
-            <div class="edit-controls">
-                <v-btn class  = "accent mt-1"
-                     width    = "100%"
-                     height   = "5.8em"
-                     style    = "transform: translateY(-2.5em)"
-                    :disabled = "!PrimaryFocusLOB.uimodel"
-                    @click    = "OpenSublistInEditor(PrimaryFocusLOB)"
+        <section class="FieldBlock" v-for="list in [FirstBA]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="controls">
+                <v-btn
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenSublistInEditor(PrimaryFocusLOB)"
+                    :disabled = "!uiIsSublistReady(PrimaryFocusLOB)"
                     >Edit sub-list</v-btn>
-                </div>
-        </div>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    :disabled    = "!uiIsSublistReady(PrimaryFocusLOB)"
+                    :placeholder = "
+                        !  PrimaryFocusLOB.uimodel
+                        ? `Select ${PrimaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
+            </div>
+        </section>
 
         <!-- ···························· SecondBA -->
 
-        <div class="FieldBlock">
-            <h4 class = "overline px-3"
-               :class = "{
-                   'yellow':
-                    ListInEditor({
-                       caption:
-                           PrimaryFocusLOB.getItem(PrimaryFocusLOB.uimodel)
-                        && PrimaryFocusLOB.getItem(PrimaryFocusLOB.uimodel).label
-                    })
-                }"
-               >{{SecondBA.caption}}</h4>
-            <v-select solo
-                v-model     = "SecondBA.uimodel"
-                item-text   = "label"
-                item-value  = "rowid"
-               :items       = "SecondBA.getList()"
-               :disabled    = "!PrimaryFocusLOB.uimodel"
-               :placeholder = "
-                   !  PrimaryFocusLOB.uimodel
-                   ? `Select ${PrimaryFocusLOB.caption} first`
-                   :  SecondBA.getList().length
-                      ?  SecondBA.placeholder
-                      : `List is empty`
-                   "/>
-        </div>
+        <section class="FieldBlock" v-for="list in [SecondBA]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model       = "list.uimodel"
+                    :items        = "list.GetItems()"
+                    item-text     = "label"
+                    item-value    = "rowid"
+                    :disabled     = "!uiIsSublistReady(PrimaryFocusLOB)"
+                    :placeholder  = "
+                        !  PrimaryFocusLOB.uimodel
+                        ? `Select ${PrimaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
+            </div>
+        </section>
 
-        <!-- ···························· -->
+        <!-- ···························· SecondaryFocusLOB -->
+        <v-divider class="pt-5"></v-divider>
+
+        <section class="FieldBlock" v-for="list in [SecondaryFocusLOB]">
+            <div class="overline"  :class="uiIsListOpen(list)">{{list.caption}}</div>
+            <div class="controls">
+                <v-btn
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenListInEditor(list)"
+                    >Edit list</v-btn>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :placeholder = "list.placeholder"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    @change      = "uiSwitchSublists(SecondaryFocusLOB, FirstBASecondary, SecondBASecondary)"
+                    />
+            </div>
+        </section>
+
+        <!-- ···························· FirstBASecondary -->
+
+        <section class="FieldBlock" v-for="list in [FirstBASecondary]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="controls">
+                <v-btn
+                    class  = "accent"
+                    width  = "10rem"
+                    height = "5.25rem"
+                    @click = "uiOpenSublistInEditor(SecondaryFocusLOB)"
+                    :disabled = "!uiIsSublistReady(SecondaryFocusLOB)"
+                    >Edit sub-list</v-btn>
+            </div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model      = "list.uimodel"
+                    :items       = "list.GetItems()"
+                    item-text    = "label"
+                    item-value   = "rowid"
+                    :disabled    = "!uiIsSublistReady(SecondaryFocusLOB)"
+                    :placeholder = "
+                        !  SecondaryFocusLOB.uimodel
+                        ? `Select ${SecondaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
+            </div>
+        </section>
+
+        <!-- ···························· SecondBASecondary -->
+
+        <section class="FieldBlock" v-for="list in [SecondBASecondary]">
+            <div class="overline"
+                :class="uiIsListOpen({caption:list.current_caption})"
+                >{{list.caption}}</div>
+            <div class="selectbox">
+                <v-select solo
+                    v-model       = "list.uimodel"
+                    :items        = "list.GetItems()"
+                    item-text     = "label"
+                    item-value    = "rowid"
+                    :disabled     = "!uiIsSublistReady(SecondaryFocusLOB)"
+                    :placeholder  = "
+                        !  SecondaryFocusLOB.uimodel
+                        ? `Select ${SecondaryFocusLOB.caption} first`
+                        :  list.GetItems().length
+                           ?  list.placeholder
+                           : `List is empty`
+                    "/>
+            </div>
+        </section>
 
     </v-container>
 
     <!-- list editor -->
 
     <v-bottom-sheet flat scrollable
-        v-model="ui_editor_state"
+        v-model="ui_editor.state"
         content-class="pa-0">
         <v-card flat tile>
         <v-card-text class="pa-0">
         <v-sheet tile class="accent white--text">
-        <v-container class="">
-            
+        <v-container v-if="ui_editor.list">
+        <template v-for="list in [ui_editor.list]">
+
             <h3 class="title pa-2 pt-0">
                 <div class="overline">List editor</div>
-                {{list_in_editor.caption}}
+                {{list.caption}}
             </h3>
 
-            <section v-if="list_in_editor">
+            <section>
 
                 <!-- ···························· List Items -->
 
-                <div v-for="item in list_in_editor.getList()"
+                <div v-for="item in list.GetItems()"
                     class="d-flex">
                     <v-text-field solo hide-details
                         v-model="item.label"
                         placeholder="Text label"
-                        class="mb-1 mr-1"
+                        class="mb-1 mr-4"
                         />
+                    <v-btn text class="white--text mt-1 px-0"
+                        @click="list.MoveItemUp(item)"
+                        tabindex="-1"
+                        :disabled = "item.rowid === 1"
+                        ><v-icon>mdi-arrow-up</v-icon></v-btn>
                     <v-btn text class="white--text mt-1"
-                        @click="list_in_editor.deleteItem(item)"
+                        @click="list.MoveItemDown(item)"
+                        tabindex="-1"
+                        :disabled = "item.rowid === list.GetItems().length"
+                        ><v-icon>mdi-arrow-down</v-icon></v-btn>
+                    <v-btn text class="white--text mt-1"
+                        @click="list.DeleteItem(item)"
                         tabindex="-1"
                         >remove</v-btn>
                 </div>
@@ -163,58 +238,106 @@
 
                 <footer class="add-new-row d-flex mt-6">
                     <v-text-field solo hide-details
-                        ref="EditorNewInputText"
-                        v-model="ui_newlabel"
-                        placeholder="New text label"
                         class="mb-4 mr-1"
-                        @keyup.enter ="AddItemByEditor({label:ui_newlabel})"
-                        />
-                    <v-btn text class="white--text mt-1"
-                       @click="AddItemByEditor({label:ui_newlabel})"
-                        >add label</v-btn>
+                        ref="EditorInputText"
+                        v-model        = "ui_editor.input"
+                        placeholder    = "New text label"
+                        @keyup.enter   = "uiAddItemInEditor()" />
+                    <v-btn text @click = "uiAddItemInEditor()"
+                       :disabled       = "!ui_editor.input"
+                        class="white--text mt-1"
+                        >add option</v-btn>
                 </footer>
 
                 <!-- ···························· -->
 
             </section>
 
+        </template>
         </v-container>
         </v-sheet>
         </v-card-text>
         </v-card>
         </v-bottom-sheet>
 
+
     <!-- dev -->
 
-    <article class="dev-log">
-        <v-container>
-            <h2 class="pb-4">Development data</h2>
+    <debug class="pb-12">
 
-
-
-
+        <v-container class="d-flex justify-space-between">
             <section>
-                <h4 class="overline">List plain view</h4>
-                <hr class="mb-2">
-                <div class="pt-0"><b>{{YourIndustry.caption}}</b></div>
-                <div v-for="item in YourIndustry.rows" class="pl-4" >
-                    <div>{{item.label}}</div>
-                </div>
 
-                <div class="pt-2"><b>{{PrimaryFocusLOB.caption}}</b></div>
-                <div v-for="item in PrimaryFocusLOB.rows" class="pl-4" >
-                    <div>{{item.label}}</div>
-                    <div v-if="item.child" class="pl-4">
-                        <div v-for="subitem in item.child.rows">
-                            <div>{{subitem.label}}</div>
+                <h2 class="mb-4">Developer area</h2>
+
+                <section class="pb-4">
+                    <h4 class="overline">Current list plain view</h4>
+                    <div class="pt-0"><b>{{YourIndustry.caption}}</b></div>
+                    <div v-for="rowitem in YourIndustry.rows" class="pl-4" >
+                        <div>{{ rowitem.label }}</div>
+                    </div>
+                    <div class="pt-2"><b>{{PrimaryFocusLOB.caption}}</b></div>
+                    <div v-for="rowitem in PrimaryFocusLOB.rows" class="pl-4">
+                        <div>{{ rowitem.label }}</div>
+                        <div v-if="rowitem.child" class="pl-4">
+                            <div v-for="subitem in rowitem.child.rows">
+                                <div>{{ subitem.label }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr class="mt-2">
-            </section>
+                    <div class="pt-2"><b>{{SecondaryFocusLOB.caption}}</b></div>
+                    <div v-for="rowitem in SecondaryFocusLOB.rows" class="pl-4">
+                        <div>{{ rowitem.label }}</div>
+                        <div v-if="rowitem.child" class="pl-4">
+                            <div v-for="subitem in rowitem.child.rows">
+                                <div>{{ subitem.label }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
+                <section class="pb-1">
+                    <v-btn small class="accent"
+                        @click="f=>{msg=ExportAll()}"
+                        >display export</v-btn>
+                </section>
+
+                <section>
+                    <div class="overline">msg</div>
+                    <div display-source>{{msg||typeof(msg)}}</div>
+                </section>
+
+            </section>
+            <section>
+
+                <section>
+                    <div class="overline">status</div>
+                    <pre display-source>
+First presentation complete
+
+## Features
+- Load list
+- Edit list
+- Editor: create, update, delete item
+
+## Todo
+- Save/Update DataBase
+- Editor: change order
+                    </pre>
+
+                    <div class="overline">code source</div>
+                    <div><a href="https://github.com/zlsheepcity/emergn-walrus">github/emergn-walrus</a></div>
+                    <ul>
+                        <li><a href="https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/ExampleList.js">List example</a></li>
+                        <li><a href="https://github.com/zlsheepcity/emergn-walrus/blob/master/src/models/EditableList.js">List model</a></li>
+                    </ul>
+                    
+                </section>
+
+            </section>
         </v-container>
-    </article>
+
+    </debug>
 
     </wrap>
 </template>
@@ -229,166 +352,144 @@
     let watch       = {}
     let data        = {}
 
-// ---------------------------- bussiness logic
+// ---------------------------- view content
 
-    let DemoValues = {
-        YourIndustry: {
-            caption:     'Your Industry',
-            placeholder: 'Select from list',
-            list: [
-                { label: 'SAP Standart Industry A', code:'IndA' },
-                { label: 'SAP Standart Industry B', code:'IndB' },
-                { label: 'SAP Standart Industry C', code:'IndC' },
-                { label: 'SAP Standart Industry D', code:'IndD' },
-                { label: 'SAP Standart Industry E', code:'IndE' },
-            ],
-        },
-        PrimaryFocusLOB: {
-            caption:     'Primary Focus LOB',
-            placeholder: 'Select from list',
-            list: [
-                {
-                  label: 'Asset Management',
-                  code:  'FLOB1',
-                  list:  [
-                      { label: 'BA x for Asset Management', code:'FLOB1_1' },
-                      { label: 'BA y for Asset Management', code:'FLOB1_2' },
-                      { label: 'BA z for Asset Management', code:'FLOB1_3' },
-                  ],
-                },
-                {
-                  label: 'Finance',
-                  code:  'FLOB2',
-                  list:  [
-                      { label: 'BA x for Finance', code:'FLOB2_1' },
-                      { label: 'BA y for Finance', code:'FLOB2_2' },
-                      { label: 'BA z for Finance', code:'FLOB2_3' },
-                  ],
-                },
-                { label: 'Manufacturing', code:'FLOB3' },
-                { label: 'Sales', code:'FLOB4' },
-                { label: 'Sourcing & Procurement', code:'FLOB5' },
-                { label: 'Supply Chain', code:'FLOB6' },
-            ],
-        },
-        FirstBA: {
-            caption:     'First most important Business Area',
-            placeholder: 'Select from list',
-        },
-        SecondBA: {
-            caption:     'Second most important Business Area',
-            placeholder: 'Select from list',
-        },
-        // add more
-    }
+    import StaticHeader from "@/components/StaticHeader.vue"
+    components = { StaticHeader, ...components }
 
-// ---------------------------- app logic
+    data = { msg:'', ...data }
+
+// ---------------------------- main logic
 
     // create lists
 
     import EditableList    from "@/models/EditableList"
-    const  YourIndustry    = new EditableList({...DemoValues['YourIndustry']})
-    const  PrimaryFocusLOB = new EditableList({...DemoValues['PrimaryFocusLOB']})
-    const  FirstBA         = new EditableList({...DemoValues['FirstBA']})
-    const  SecondBA        = new EditableList({...DemoValues['SecondBA']})
+    const  YourIndustry    = new EditableList({constructor: EditableList})
+    const  PrimaryFocusLOB = new EditableList({constructor: EditableList})
+    const  FirstBA         = new EditableList({constructor: EditableList})
+    const  SecondBA        = new EditableList({constructor: EditableList})
+    const  SecondaryFocusLOB = new EditableList({constructor: EditableList})
+    const  FirstBASecondary  = new EditableList({constructor: EditableList})
+    const  SecondBASecondary = new EditableList({constructor: EditableList})
+
     data = {
         YourIndustry,
         PrimaryFocusLOB,
         FirstBA,
         SecondBA,
+        SecondaryFocusLOB,
+        FirstBASecondary,
+        SecondBASecondary,
     ...data }
 
-    // create sub-lists
-
-    PrimaryFocusLOB
-        .getList()
-        .forEach(row => {
-           if (row.list)
-               row.child = new EditableList({ ...row, caption:row.label })
-         })
-
-
-
-    // form ui
-
     methods = {
-        SynchronizeLists () {
-            let   RNA = this
-            const PrimaryFocusLOB = RNA.$data.PrimaryFocusLOB
-            const FirstBA         = RNA.$data.FirstBA
-            const SecondBA        = RNA.$data.SecondBA
-            let rowid = PrimaryFocusLOB.uimodel
-            const row = PrimaryFocusLOB.getItem(rowid)
-            if (!row.child) { // create new
-                 row.child = new EditableList({caption:row.label})
-            }
-            // sync
-            FirstBA.rows     = row.child.rows || []
-            FirstBA.uimodel  = null
-            SecondBA.rows    = row.child.rows || []
-            SecondBA.uimodel = null
-        },
+        ExportAll () { return [
+            YourIndustry.ExportList(),
+            PrimaryFocusLOB.ExportList(),
+            SecondaryFocusLOB.ExportList(),
+        ]},
     ...methods }
 
-    // editor ui
+    // load data
+
+    import ExampleList  from "@/models/ExampleList"
+
+    YourIndustry.CreateList({...ExampleList['YourIndustry']})
+    PrimaryFocusLOB.CreateList({...ExampleList['PrimaryFocusLOB']})
+    FirstBA.CreateList({...ExampleList['FirstBA']})
+    SecondBA.CreateList({...ExampleList['SecondBA']})
+    SecondaryFocusLOB.CreateList({...ExampleList['SecondaryFocusLOB']})
+    FirstBASecondary.CreateList({...ExampleList['FirstBA']})
+    SecondBASecondary.CreateList({...ExampleList['SecondBA']})
+
+// ---------------------------- ui actions
 
     data = {
-        ui_editor_state: false,
-        ui_newlabel:     '',
-        list_in_editor:  false,
+        ui_editor: {
+            state: false,
+            list:  false,
+            input: '',
+        },
     ...data }
+
     methods = {
-        ListInEditor (list) {
+
+        uiOpenListInEditor (list) {
             let RNA = this
-            const open = RNA.$data.ui_editor_state
-            const data = RNA.$data.list_in_editor
-            if ( !open||!data ) return false
-            if ( !list )        return true // ping ok
-            return list.caption === data.caption
+            RNA.$data.ui_editor = { state:true, input:'', list }
         },
-        OpenInEditor (list) {
+
+        uiOpenSublistInEditor (focusLOB) {
             let RNA = this
-            RNA.$data.ui_editor_state = true
-            RNA.$data.ui_newlabel     = ''
-            RNA.$data.list_in_editor  = list
+
+            if ( !RNA.uiIsSublistReady(focusLOB) ) return false
+
+            let rowid = focusLOB.uimodel
+            const row = focusLOB.GetItem(rowid)
+            RNA.uiOpenListInEditor(row.child)
         },
-        AddItemByEditor (item) {
-            let {label} = item
-            let  RNA    = this
-            let list    = RNA.$data.list_in_editor
+
+        uiAddItemInEditor () {
+            let RNA = this
+            let label = RNA.$data.ui_editor.input
+            let list  = RNA.$data.ui_editor.list
+
             if (!label || !list) return false
-            list.createItem({label})
-            RNA.$data.ui_newlabel = '' // reset
-            // autofocus for next item
-            if (RNA.$data.ui_editor_state) {
-                RNA.$refs.EditorNewInputText
-                   .$el.getElementsByTagName('input')[0].focus()
-                RNA.$data.msg = RNA.$refs.EditorNewInputText.$el.getElementsByTagName('input')[0]
-            }
+
+            // update model
+            list.CreateItem({label})
+
+            // update ui
+            RNA.$data.ui_editor.input = ''   // reset text input
         },
-        OpenSublistInEditor (owner) {
+
+        uiIsListOpen (list) {
+            let   RNA = this
+            const open = RNA.$data.ui_editor.state
+            const data = RNA.$data.ui_editor.list
+
+            // return class-name friendly
+            if ( !open||!data ) return ''
+            if ( !list )        return ''
+            if (  list.caption !== data.caption ) return ''
+            return 'is-open'
+        },
+
+        uiIsSublistReady (focusLOB) {
             let RNA = this
-            let rowid = owner.uimodel
-            const row = RNA.$data.PrimaryFocusLOB.getItem(rowid)
-            if (!row.child) { // create new
-                 row.child = new EditableList({caption:row.label})
-            }
-            RNA.OpenInEditor(row.child)
+            return !!focusLOB.uimodel
         },
+
+        uiSwitchSublists (focusLOB, firstBA, secondBA) {
+            let   RNA = this
+            const FocusLOB = focusLOB
+            const FirstBA  = firstBA
+            const SecondBA = secondBA
+
+            // define list to change
+            let rowid = FocusLOB.uimodel
+            const row = FocusLOB.GetItem(rowid)
+            if (!row.child) { // create new sublist
+                 row.child = new FocusLOB.constructor({caption:row.label})
+            }
+
+            // reset ui state
+            FirstBA.uimodel  = null
+            SecondBA.uimodel = null
+
+            // sync sublists
+            FirstBA.rows     = row.child.rows || []
+            SecondBA.rows    = row.child.rows || []
+            FirstBA.current_caption  = row.child.caption || false
+            SecondBA.current_caption = row.child.caption || false
+        },
+
     ...methods }
-
-
-// ---------------------------- dev tests
-
-    let msg = ''
-    data = {
-        msg: msg,
-    ...data }
 
 // ---------------------------- export ready
 
 export default {
-    name: 'App',
+    name: 'HomeView',
     props,
     components,
     methods,
@@ -401,15 +502,30 @@ export default {
 </script>
 
 <style>
+    .SetFocusFields {
+        padding-bottom: 20vh;
+    }
     .FieldBlock {
         display: grid;
-        grid-column-gap: 10em;
+      --controls-gap:   10rem;
+      --design-gap:   0.75rem;
+        grid-row-gap: 0.25rem;
+        grid-column-gap: var(--controls-gap);
         grid-template-columns: [a] auto [b] 10em [c];
+        grid-template-areas:
+            'title controls'
+            'field controls';
     }
-    .FieldBlock *              { grid-column: a / b; }
-    .FieldBlock .edit-controls { grid-column: b / c; }
-    .dev-log {
-        margin-top:     20vh;
-        padding-bottom: 10vh;
+    .FieldBlock> *         { grid-area: field }
+    .FieldBlock> .overline { grid-area: title }
+    .FieldBlock> .controls { grid-area: controls }
+    .FieldBlock  .overline { padding-left: var(--design-gap); }
+    .FieldBlock  .is-open  { background-color: yellow; }
+
+    @media screen and (max-width:60rem) {
+        .FieldBlock {
+          --controls-gap: 2rem;
+          --design-gap:   0rem;
+        }
     }
 </style>

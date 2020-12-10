@@ -20,6 +20,9 @@ Vue.component( 'debug', debug )
 
 // project
 
+import WalrusHeader from './components/walrus-header';
+Vue.component( 'walrus-header',  WalrusHeader  )
+
 import WalrusCard from './components/walrus-card';
 Vue.component( 'walrus-card',  WalrusCard  )
 
