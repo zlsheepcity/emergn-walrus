@@ -45,9 +45,9 @@
         </v-container>
     </section>
 
-    <!-- ···························· PROJECT LINKS -->
+    <!-- ···························· FORM -->
 
-
+    <module-form :resolved="unlockNext"/>
 
     <!-- ···························· NEXT -->
 
@@ -69,19 +69,6 @@
         </v-container>
     </section>
 
-    <!-- ···························· DEV LINKS -->
-
-    <debug style="margin-top:2em;padding:2em 0;">
-    <v-container>
-    <pre display-source>
-
-*issue get form values
-*todo create form
-*issue save form result
-
-    </pre>
-    </v-container>
-    </debug>
 
     <!-- ···························· -->
 
@@ -99,6 +86,10 @@
     let data        = {}
 
 // ---------------------------- main logic
+
+    // content
+    import ModuleForm from "@/parts/M-0-Form2.vue"
+    components = { ...components, ModuleForm }
 
     // use router
     computed = { ...computed, Router ()   { return this.$router } }

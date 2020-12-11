@@ -69,20 +69,6 @@
         </v-container>
     </section>
 
-    <!-- ···························· DEV LINKS -->
-
-    <debug style="margin-top:2em;padding:2em 0;">
-    <v-container>
-    <pre display-source>
-
-*issue get form values
-*todo create form
-*issue save form result
-
-    </pre>
-    </v-container>
-    </debug>
-
     <!-- ···························· -->
 
     </wrap>
@@ -100,6 +86,10 @@
 
 // ---------------------------- main logic
 
+    // content
+    import ModuleForm from "@/parts/M-0-Form1.vue"
+    components = { ...components, ModuleForm }
+
     // use router
     computed = { ...computed, Router ()   { return this.$router } }
     methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
@@ -116,9 +106,6 @@
         unlockNext () { this.$data.page.next.ready = true },
     ...methods }
 
-    // content
-    import ModuleForm from "@/parts/M-0-Form1.vue"
-    components = { ...components, ModuleForm }
 
 
 // ---------------------------- export ready

@@ -3,19 +3,9 @@
 
     <!-- ···························· HEADER -->
 
-    <section class="page-header">
-    <v-container>
-    <header class="px-3">
+    <walrus-header title="SAP Value Starter" />
 
-        <h1 class="text-h2">
-            SAP Value Starter
-        </h1>
-
-    </header>
-    </v-container>
-    </section>
-
-    <!-- ···························· PROJECT LINKS -->
+    <!-- ···························· CARD EXAMPLE -->
 
     <section>
         <v-container>
@@ -35,11 +25,13 @@
         </v-container>
     </section>
 
-    <!-- ···························· DEV LINKS -->
+    <!-- ···························· DEV -->
 
     <v-container>
     <debug style="margin-top:5em;padding:1em">
-    <pre display-source>*issue authorization</pre>
+
+        *issue authorization
+
     </debug>
     </v-container>
 
@@ -65,11 +57,10 @@
     methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
 
     // this page
-    let page = {
-        next: {
-            ready: true,
-            link: 'Home',
-        },
+    let page = {}
+    page.next = {
+        ready: true,
+        link: 'Home',
     }
     data = { ...data, page }
 

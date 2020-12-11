@@ -7,10 +7,10 @@
          title="M-0. Guided Customer Assessment"
         :links="[
             { goto:'Welcome', label:'Logout' },
-            { goto:'Home',    label:'Home'   },
+            { goto:'Home',    label:'Home'   }, 
         ]"/>
 
-    <!-- ···························· PROJECT LINKS -->
+    <!-- ···························· cards -->
 
     <v-container>
     <v-row dense align-content="stretch">
@@ -42,6 +42,26 @@
     </v-row>
     </v-container>
 
+    <!-- ···························· dev -->
+
+    <v-container v-if="Store.state.M0_Completed">
+    <debug class="pa-3">
+
+        <div class="pb-3">
+            <div><b>Module completed</b></div>
+            <div>The first card is «completed» and disabled.</div>
+            <div>The both others are «unlocked».</div>
+            <div>Thanks for checking this prototype.</div>
+        </div>
+
+        <div class="pb-3">
+            <div>state.M0_Completed: {{Store.state.M0_Completed}}</div>
+            <div>state.M0_AssessmentCompleted: {{Store.state.M0_AssessmentCompleted}}</div>
+        </div>
+
+    </debug>
+    </v-container>
+
     <!-- ···························· -->
 
     </wrap>
@@ -63,6 +83,8 @@
     computed = { ...computed, Router ()   { return this.$router } }
     methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
 
+    // use store
+    computed = { ...computed, Store ()    { return this.$store } }
 
 // ---------------------------- export ready
 

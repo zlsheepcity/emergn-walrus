@@ -45,9 +45,9 @@
         </v-container>
     </section>
 
-    <!-- ···························· PROJECT LINKS -->
+    <!-- ···························· FORM -->
 
-
+    <module-form :resolved="unlockNext"/>
 
     <!-- ···························· NEXT -->
 
@@ -59,7 +59,7 @@
                 <v-col cols="12" md="4">
                 <walrus-card
                     :disabled="!page.next.ready"
-                    :action="f=>goto(page.next.link)">
+                    :action="f=>Finish()">
                     <div class="headline"> Finish </div>
                 </walrus-card>
                 </v-col>
@@ -68,20 +68,6 @@
 
         </v-container>
     </section>
-
-    <!-- ···························· DEV LINKS -->
-
-    <debug style="margin-top:2em;padding:2em 0;">
-    <v-container>
-    <pre display-source>
-
-*issue get form values
-*todo create form
-*issue save form result
-
-    </pre>
-    </v-container>
-    </debug>
 
     <!-- ···························· -->
 
@@ -100,9 +86,25 @@
 
 // ---------------------------- main logic
 
+    // content
+    import ModuleForm from "@/parts/M-0-Form3.vue"
+    components = { ...components, ModuleForm }
+
     // use router
     computed = { ...computed, Router ()   { return this.$router } }
     methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
+
+    // use store
+    computed = { ...computed, Store ()    { return this.$store } }
+    methods  = {
+
+        Finish () {
+            let RNA = this
+            RNA.$store.commit('M0_MarkComplete')
+            RNA.goto('Module0')
+        },
+
+    ...methods }
 
     // navigation
     let page = {

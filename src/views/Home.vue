@@ -5,9 +5,7 @@
 
     <walrus-header
          title="Home"
-        :links="[
-            { goto:'Welcome', label:'Logout' },
-        ]"/>
+        :links="[{ goto:'Welcome', label:'Logout' }]"/>
 
 
     <!-- ···························· PROJECT LINKS -->
@@ -23,6 +21,12 @@
                     Guided Customer Assessment
                 </div>
             </walrus-card>
+            </v-col>
+
+            <v-col  cols="12" md="3" v-if="Store.state.M0_Completed">
+            <debug class="pa-3">
+                Module 0 is «completed»
+            </debug>
             </v-col>
 
         </v-row>
@@ -74,6 +78,8 @@
     computed = { ...computed, Router ()   { return this.$router } }
     methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
 
+    // use store
+    computed = { ...computed, Store ()    { return this.$store } }
 
 // ---------------------------- export ready
 
