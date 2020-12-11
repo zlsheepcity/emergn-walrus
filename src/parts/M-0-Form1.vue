@@ -334,12 +334,18 @@
         ]},
     ...methods }
 
-    // load data
+    // load data from bazaar
+    import Content from "@/bazaar/content/content"
+
+       YourIndustry.CreateList({ ...Content.IndustryList() })
+    PrimaryFocusLOB.CreateList({ ...Content.FocusLOBList() })
+
+    // load data deprecated way
 
     import ExampleList  from "@/models/ExampleList"
 
-    YourIndustry.CreateList({...ExampleList['YourIndustry']})
-    PrimaryFocusLOB.CreateList({...ExampleList['PrimaryFocusLOB']})
+    //YourIndustry.CreateList({...ExampleList['YourIndustry']})
+    //PrimaryFocusLOB.CreateList({...ExampleList['PrimaryFocusLOB']})
     FirstBA.CreateList({...ExampleList['FirstBA']})
     SecondBA.CreateList({...ExampleList['SecondBA']})
 

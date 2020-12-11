@@ -1,12 +1,4 @@
 /** walrus → EditableList
-
-    ## 2020.12.1 установка по сортировке
-
-    Получатели списков используют GetItems().
-    Внутри функции описаны правила сортировки.
-
-    Надо добавить функции для Item Reorder.
-
 */
 
 let EditableList = function (protein) {
