@@ -61,6 +61,11 @@
                 <v-chip outlined label class="mb-2"
                     @click="f=>goto('Dev_blog')"
                     >Dev blog</v-chip>
+
+                <v-chip color="accent" label class="mb-2"
+                    @click="f=>goto('SetFocus')"
+                    >Content admin tool</v-chip>
+
         </section>
         </v-col>
     </v-row>
