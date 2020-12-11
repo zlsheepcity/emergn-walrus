@@ -334,11 +334,19 @@
         ]},
     ...methods }
 
-    // load data from bazaar
+    // load data
+
     import Content from "@/bazaar/content/content"
 
-       YourIndustry.CreateList({ ...Content.IndustryList() })
-    PrimaryFocusLOB.CreateList({ ...Content.FocusLOBList() })
+    const field_values = {
+        YourIndustry:    Content.IndustryList(),
+        PrimaryFocusLOB: Content.FocusLOBList(),
+    }
+
+    // apply data
+
+       YourIndustry.CreateList({ ...field_values['YourIndustry'] })
+    PrimaryFocusLOB.CreateList({ ...field_values['PrimaryFocusLOB'] })
 
     // load data deprecated way
 

@@ -1,6 +1,6 @@
 // Load data
 
-// *issue temporary solution
+// *issue store and load content-lists
 import connected_data  from "@/models/ExampleList"
 
 // Create API
