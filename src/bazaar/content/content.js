@@ -1,7 +1,10 @@
 // Load data
 
+let static_data = {}
+
 // *issue store and load content-lists
-import connected_data  from "@/models/ExampleList"
+import ExampleList  from "@/models/ExampleList"
+static_data = { ...static_data, ...ExampleList }
 
 // Create API
 
@@ -14,13 +17,13 @@ let bazaar_content_model = function (protein) {
 
 // ---------------------------- // API
 
-    RNA.IndustryList = f=>RNA.getDataRow('YourIndustry')
-    RNA.FocusLOBList = f=>RNA.getDataRow('PrimaryFocusLOB')
+    RNA.IndustryList = f=>RNA.getStaticDataRow('YourIndustry')
+    RNA.FocusLOBList = f=>RNA.getStaticDataRow('PrimaryFocusLOB')
 
 // ---------------------------- // Workers
 
-    RNA.getDataRow = rowid => {
-        return { ...connected_data[rowid] }
+    RNA.getStaticDataRow = rowid => {
+        return { ...static_data[rowid] }
     }
 
 // ---------------------------- // Transcription
