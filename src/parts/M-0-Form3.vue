@@ -36,6 +36,7 @@
             max="40" 
             step="20"
             track-color="grey"
+            v-model="Innovation"
             > 
             </v-slider>
         </v-col>    
@@ -70,6 +71,7 @@
             max="40" 
             step="20"
             track-color="grey"
+            v-model="Customization"
             > 
             </v-slider>
         </v-col>    
@@ -104,6 +106,7 @@
             max="40" 
             step="20"
             track-color="grey"
+            v-model="CloudPreference"
             > 
             </v-slider>
         </v-col>    
@@ -131,6 +134,7 @@ computed = {
     return this.$router;
   },
 };
+
 methods = {
   ...methods,
   goto(path) {
@@ -138,6 +142,36 @@ methods = {
   },
 };
 
+// ---------------------------- Dev
+
+const CloudPreference = [];
+const Innovation = [];
+const Customization =[];
+
+
+data = {
+        CloudPreference,
+        Innovation,
+        Customization,
+    ...data }
+
+  methods = {
+        ExportAll () { return [
+            CloudPreference,
+            Innovation,
+            Customization
+        ]},
+    ...methods }    
+
+// ---------------------------- ui actions
+
+    data = {
+        ui_editor: {
+            state: false,
+            list:  false,
+            input: '',
+        },
+    ...data }
 
 // ---------------------------- export ready
 
