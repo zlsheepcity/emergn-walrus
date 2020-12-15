@@ -19,7 +19,10 @@
     </v-container>
     </section>
 
-    <!-- ···························· PROJECT LINKS -->
+    <!-- ···························· POSTS -->
+
+    <FileSystem/>
+    <TemplatePost/>
 
     </wrap>
 </template>
@@ -39,6 +42,14 @@
     // use router
     computed = { ...computed, Router ()   { return this.$router } }
     methods  = { ...methods,  goto (path) { return this.$router.push(path) } }
+
+    // get posts
+
+    import TemplatePost from '@/dev/blog/_template.vue'
+    components = { ...components, TemplatePost }
+
+    import FileSystem from '@/dev/blog/zl001-FileSystem.vue'
+    components = { ...components, FileSystem }
 
 
 // ---------------------------- export ready

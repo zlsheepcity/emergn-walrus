@@ -39,9 +39,8 @@
         <v-col cols="12" md="6">
         <pre display-source><b>Project status:</b>
 
-- 2020.12.10
-- in develop
-- navigation prototype next
+- 2020.12.15
+- migration in progress
 
 
 
@@ -55,12 +54,12 @@
                  style="width: fit-content;">
 
                 <v-chip outlined label class="mb-2"
-                    href="https://github.com/zlsheepcity/emergn-walrus"
-                    >Code source</v-chip>
-
-                <v-chip outlined label class="mb-2"
                     @click="f=>goto('Dev_blog')"
                     >Dev blog</v-chip>
+
+                <v-chip outlined label class="mb-2"
+                    href="https://github.com/zlsheepcity/emergn-walrus"
+                    >Current code source</v-chip>
 
                 <v-chip color="accent" label class="mb-2"
                     @click="f=>goto('SetFocus')"

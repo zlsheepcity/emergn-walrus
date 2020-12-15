@@ -50,7 +50,7 @@ let Routes = [
     {
         component: () => import(
             /* webpackChunkName: "Dev_home" */
-                        '../views/Dev_home.vue'),
+                         '../dev/_home.vue'),
             name:                'Dev_home',
             alias:              '/Dev_home',
             path:               '/',
@@ -59,7 +59,7 @@ let Routes = [
     {
         component: () => import(
             /* webpackChunkName: "Dev_blog" */
-                        '../views/Dev_blog.vue'),
+                         '../dev/_blog.vue'),
             name:                'Dev_blog',
             path:               '/Dev_blog',
     },
@@ -67,7 +67,7 @@ let Routes = [
     {
         component: () => import(
             /* webpackChunkName: "Dev_blogpost" */
-                        '../views/Dev_blog.vue'),
+                         '../dev/_blog.vue'),
             name:                'Dev_blogpost',
             path:               '/Dev_blog/:pageid',
             props: true, // props = [ ...props, 'pageid' ]
