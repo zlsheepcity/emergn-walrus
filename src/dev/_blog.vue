@@ -5,22 +5,19 @@
 
     <section class="page-header">
     <v-container>
-    <header class="px-3">
-
-
-        <v-chip small class="overline pr-4 mr-2" @click="f=>goto('Dev_home')">
-            ► dev home
-        </v-chip>
-        <h1 class="text-h2">
-            Dev blog
-        </h1>
-
+    <header>
+        <v-chip small
+            class="overline pr-4 mr-2"
+            @click="f=>goto('Dev_home')"
+            >► dev home</v-chip>
+        <h1 class="text-h2"> Dev blog </h1>
     </header>
     </v-container>
     </section>
 
     <!-- ···························· POSTS -->
 
+    <DesignSystem/>
     <FileSystem/>
     <TemplatePost/>
 
@@ -50,6 +47,8 @@
 
     import FileSystem from '@/dev/blog/zl001-FileSystem.vue'
     components = { ...components, FileSystem }
+    import DesignSystem from '@/dev/blog/zl002-DesignSystem.vue'
+    components = { ...components, DesignSystem }
 
 
 // ---------------------------- export ready

@@ -5,7 +5,7 @@
 
     <section class="page-header">
     <v-container>
-    <header class="px-3">
+    <header>
         <h1 class="text-h2"> Dev home </h1>
     </header>
     </v-container>
