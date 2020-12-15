@@ -23,21 +23,21 @@
                     <v-col cols="3">
                         <figure>
                             <a href="https://raw.githubusercontent.com/zlsheepcity/emergn-walrus/master/public/log/zl002-example1.png">
-                            <img src="/log/zl002-example1.png">
+                            <img src="@/assets/log/zl002-example1.png">
                             </a>
                         </figure>
                     </v-col>
                     <v-col cols="3">
                         <figure>
                             <a href="https://raw.githubusercontent.com/zlsheepcity/emergn-walrus/master/public/log/zl002-example2.png">
-                            <img src="/log/zl002-example2.png">
+                            <img src="@/assets/log/zl002-example2.png">
                             </a>
                         </figure>
                     </v-col>
                     <v-col cols="3">
                         <figure>
                             <a href="https://raw.githubusercontent.com/zlsheepcity/emergn-walrus/master/public/log/zl002-example3.png">
-                            <img src="/log/zl002-example3.png">
+                            <img src="@/assets/log/zl002-example3.png">
                             </a>
                         </figure>
                     </v-col>
