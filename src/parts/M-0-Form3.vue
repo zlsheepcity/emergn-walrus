@@ -1,112 +1,112 @@
 <template>
   <wrap>
-    <v-container class="">
+    <v-container>
       <v-row>
-        <v-col style="box-shadow: none">
-          <v-card >
-              Innovation
+        <v-col >
+          <v-card style="box-shadow: none">
+              {{FormModel.Innovation.labels[0]}}
           </v-card>
         </v-col>
         <v-col>
-          <v-card>
-              Innovator
+          <v-card style="box-shadow: none">
+              {{FormModel.Innovation.labels[1]}}
           </v-card>
         </v-col>
          <v-col>
-          <v-card>
-              Fast follower
+          <v-card style="box-shadow: none">
+              {{FormModel.Innovation.labels[2]}}
           </v-card>
         </v-col>
         <v-col>
-          <v-card>
-              Late follower
+          <v-card style="box-shadow: none">
+              {{FormModel.Innovation.labels[3]}}
           </v-card>
         </v-col>
       </v-row>
       <v-row>
         <v-col md="3">
-            <v-card>
+            <v-card style="box-shadow: none">
          
             </v-card>
         </v-col>      
         <v-col >  
             <v-slider 
-            color="black" 
-            min="0" 
-            max="40" 
-            step="20"
-            track-color="grey"
-            v-model="Innovation"
+            :color="FormModel.Innovation.color" 
+            :min="FormModel.Innovation.min" 
+            :max="FormModel.Innovation.max" 
+            :step="FormModel.Innovation.step"
+            :track-color="FormModel.Innovation.trackColor"
+            v-model="FormModel.Innovation.val"
             > 
             </v-slider>
         </v-col>    
       </v-row>
       <v-row>
         <v-col md="3">
-          <v-card >
-              Customization
+          <v-card style="box-shadow: none" >
+              {{FormModel.Customization.labels[0]}}
           </v-card>
         </v-col>
         <v-col md="4">
-          <v-card>
-              Not many / Fit to standard
+          <v-card style="box-shadow: none">
+              {{FormModel.Customization.labels[1]}}
           </v-card>
         </v-col>
          <v-col md="4">
-          <v-card>
-              High build to fit
+          <v-card style="box-shadow: none">
+              {{FormModel.Customization.labels[2]}}
           </v-card>
         </v-col>
       </v-row>
       <v-row>
         <v-col md="3">
-            <v-card>
+            <v-card style="box-shadow: none">
          
             </v-card>
         </v-col>      
         <v-col >  
             <v-slider 
-            color="black" 
-            min="0" 
-            max="40" 
-            step="20"
-            track-color="grey"
-            v-model="Customization"
+            :color="FormModel.Customization.color" 
+            :min="FormModel.Customization.min" 
+            :max="FormModel.Customization.max" 
+            :step="FormModel.Customization.step"
+            :track-color="FormModel.Customization.trackColor"
+            v-model="FormModel.Customization.val"
             > 
             </v-slider>
         </v-col>    
       </v-row>
       <v-row>
         <v-col md="3">
-          <v-card >
-              Cloud preference
+          <v-card style="box-shadow: none" >
+              {{FormModel.CloudPreference.labels[0]}}
           </v-card>
         </v-col>
         <v-col md="4">
-          <v-card>
-              Not many / Fit to standard
+          <v-card style="box-shadow: none" >
+               {{FormModel.CloudPreference.labels[1]}}
           </v-card>
         </v-col>
          <v-col md="4">
-          <v-card>
-              High build to fit
+          <v-card style="box-shadow: none">
+               {{FormModel.CloudPreference.labels[2]}}
           </v-card>
         </v-col>
       </v-row>
       <v-row>
         <v-col md="3">
-            <v-card>
+            <v-card style="box-shadow: none">
          
             </v-card>
         </v-col>      
         <v-col >  
             <v-slider 
-            color="black" 
-            min="0" 
-            max="40" 
-            step="20"
-            track-color="grey"
-            v-model="CloudPreference"
+            :color="FormModel.CloudPreference.color" 
+            :min="FormModel.CloudPreference.min" 
+            :max="FormModel.CloudPreference.max" 
+            :step="FormModel.CloudPreference.step"
+            :track-color="FormModel.CloudPreference.trackColor"
+            v-model="FormModel.CloudPreference.val"
             > 
             </v-slider>
         </v-col>    
@@ -144,23 +144,53 @@ methods = {
 
 // ---------------------------- Dev
 
-const CloudPreference = [];
-const Innovation = [];
-const Customization =[];
+
+// ----------------------------mockup data for non developed import
+
+
+const FormModel = {
+      CloudPreference: {
+        color:"black",
+        min:"0",
+        max:"40",
+        step:"20", 
+        trackColor:"grey",
+        labels:["Cloud preference", "Not many / Fit to standard", "High build to fit"],
+        model:"CloudPreference",
+        val: "",
+      },
+      Innovation: {
+        color:"black",
+        min:"0",
+        max:"40",
+        step:"15", 
+        trackColor:"grey",
+        labels:["Innovation","Innovator", "Fast follower", "Late follower"],
+        model:"Innovation",
+        val: "",
+      },
+      Customization: {
+        color:"black",
+        min:"0",
+        max:"40",
+        step:"20", 
+        trackColor:"grey",
+        labels:["Customization", "Not many / Fit to standard", "High build to fit"],
+        model:"Customization",
+        val: "",
+      },
+};
 
 
 data = {
-        CloudPreference,
-        Innovation,
-        Customization,
+        FormModel,
     ...data }
 
   methods = {
-        ExportAll () { return [
-            CloudPreference,
-            Innovation,
-            Customization
-        ]},
+        ExportAll () { 
+          const FormModel = $this.data.FormModel;
+          return FormModel;
+        },
     ...methods }    
 
 // ---------------------------- ui actions
