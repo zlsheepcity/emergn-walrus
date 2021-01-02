@@ -21,10 +21,12 @@
             type:'api',
             arrow: 's',
             titleIsEmpty: true,
+            caption:'Start',
         },
         getAuth: {
             type:'api',
             arrow: 'w',
+            titleIsEmpty: true,
         },
 
         // user DB
@@ -34,24 +36,28 @@
         },
         UserDB_A1: {
             type:'api',
-            arrow:'we',
+            arrow:'e',
+            //title:'Read',
             titleIsEmpty: true,
         },
         UserDB_A2: {
             type:'api',
             arrow: 'we',
+            //title:'Crud User',
             titleIsEmpty: true,
         },
         UserDB_A3: {
             type:'api',
             arrow: 'we',
+            //title:'Crud Role',
             titleIsEmpty: true,
         },
 
 
+
         Welcome: {
             type:'view',
-            title:'Welcome View',
+            title:'Login View',
         },
         Sessions: {
             type:'view',
@@ -62,7 +68,7 @@
             title:'Survey View',
         },
         SurveyResults: {
-            type:'view',
+            type:'controller',
             title:'Survey Results',
         },
         SurveyDB: {
@@ -92,7 +98,7 @@
             title:'Documents View'
         },
         AdminDocs: {
-            type:'view',
+            type:'controller',
             title:'Upload Documents'
         },
         DocsDB: {
@@ -112,7 +118,7 @@
         // content
 
         EditContent: {
-            type:'view',
+            type:'controller',
         },
         ContentDB: {
             type:'db',
@@ -130,10 +136,10 @@
 
 
         ViewUsers: {
-            type:'view',
+            type:'controller',
         },
         AssignRole: {
-            type:'view',
+            type:'controller',
         },
 
         AuthController: {
@@ -149,22 +155,44 @@
         UserAdmin: {
             type:'api',
             arrow:'s',
-            title:'Role: Super admin'
+            //title:'SetRole',
+            titleIsEmpty: true,
+            caption:'Super admin',
         },
         UserContent: {
             type:'api',
             arrow:'s',
-            title:'Role: Content manager'
+            //title:'SetRole',
+            titleIsEmpty: true,
+            caption:'Content manager',
         },
         UserInstructor: {
             type:'api',
             arrow:'s',
-            title:'Role: Instructor'
+            //title:'SetRole',
+            titleIsEmpty: true,
+            caption:'Instructor',
         },
         UserClient: {
             type:'api',
             arrow:'s',
-            title:'Role: Client'
+            //title:'SetRole',
+            titleIsEmpty: true,
+            caption:'Client',
+        },
+
+        CProfile: {
+            type:'controller',
+            title:'Client Profile',
+        },
+        CProfileDB: {
+            type:'db',
+            title:'Client Data DB',
+        },
+        apiCProfile: {
+            type:'api',
+            arrow:'we',
+            titleIsEmpty: true,
         },
 
     }
@@ -174,9 +202,17 @@
 </script>
 
 <style>
+    #vizualizer{
+        padding: 4em 1em;
+        background-color: hsl( 66, 61%, 94%);
+    }
     #vizualizer .model-grid {
+        max-width: 80em;
+        margin:  0 auto;
+
+
         display: grid;
-        grid-gap: 1em;
+        grid-gap: 0.5em 1em;
         grid-template-columns: repeat( 8, auto );
         grid-template-rows:    repeat( 24, auto );
         grid-template-areas:
@@ -184,8 +220,9 @@
 ' UserDB          UserDB_A1       AuthC           AuthC           AuthC           AuthC           getAuth         Welcome '
 ' UserDB          .               SapAuthC        SapAuthC        SapAuthC        .               .               . '
 ' UserDB          .               UserAdmin       UserContent     UserInstructor  UserClient      .               . '
-' UserDB          UserDB_A2       ViewUsers       .               .               Sessions        .               . '
-' UserDB          UserDB_A3       AssignRole      .               .               Survey          SurveyDB_A1     SurveyDB '
+' UserDB          UserDB_A2       ViewUsers       .               CProfile        CProfile        apiCProfile     CProfileDB '
+' UserDB          UserDB_A3       AssignRole      .               .               Sessions        .               . '
+' .               .               .               .               .               Survey          SurveyDB_A1     SurveyDB '
 ' .               .               .               .               SurveyResults   .               SurveyDB_A2     SurveyDB '
 ' .               .               EditContent     EditContent     AdminDocs       Docs            .               SurveyDB '
 ' .               .               ContentDB_A1    ContentDB_A2    DocsDB_A1       DocsDB_A2       .               SurveyDBout '
@@ -207,6 +244,9 @@
             <ul v-if="box.functions">
                 <li v-for="(item,index) in box.functions">{{ item }}</li>
             </ul>
+            <div v-if="box.caption"
+                 style=" font-size:1.5em; padding-bottom:1em;"
+                 >{{ box.caption }}</div>
         </figure>
     </article>
 
@@ -230,9 +270,15 @@
         align-items:     center;
         align-content:   center;
         justify-content: center;
+        text-align:      center;
 
-        margin:  0;
-        grid-area: var(--area, auto)
+        grid-area: var(--area, auto);
+
+        margin: 0;
+        cursor: default;
+    }
+    #vizualizer .model-grid > *:hover {
+        outline: 0.33em solid hsla(204, 22%, 55%, 1);
     }
     #vizualizer .view {
         background: var(--c-view);
@@ -243,6 +289,9 @@
         background: var(--c-controller);
         text-align: center;
         padding:    1em;
+    }
+    #vizualizer .api {
+        padding:    0.5em 0;
     }
     #vizualizer .db {
         background: var(--c-db);
