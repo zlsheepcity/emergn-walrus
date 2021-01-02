@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Data Model </title>
+
+    <!-- vizualizer -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+<script>
+    let data = {}
+
+    // define list of models
+
+    const List = {
+        Start: {
+            type:'api',
+            arrow: 's',
+            titleIsEmpty: true,
+        },
+        getAuth: {
+            type:'api',
+            arrow: 'w',
+        },
+
+        // user DB
+
+        UserDB: {
+            type:'db',
+        },
+        UserDB_A1: {
+            type:'api',
+            arrow:'we',
+            titleIsEmpty: true,
+        },
+        UserDB_A2: {
+            type:'api',
+            arrow: 'we',
+            titleIsEmpty: true,
+        },
+        UserDB_A3: {
+            type:'api',
+            arrow: 'we',
+            titleIsEmpty: true,
+        },
+
+
+        Welcome: {
+            type:'view',
+            title:'Welcome View',
+        },
+        Sessions: {
+            type:'view',
+            title:'Sessions View',
+        },
+        Survey: {
+            type:'view',
+            title:'Survey View',
+        },
+        SurveyResults: {
+            type:'view',
+            title:'Survey Results',
+        },
+        SurveyDB: {
+            type:'db',
+        },
+        SurveyDB_A1: {
+            type:'api',
+            arrow:'we',
+            titleIsEmpty: true,
+        },
+        SurveyDB_A2: {
+            type:'api',
+            arrow:'w',
+            titleIsEmpty: true,
+        },
+        SurveyDBout: {
+            type:'api',
+            arrow:'s',
+            titleIsEmpty: true,
+            functions: ['Analytics','Stats','...'],
+        },
+
+        // docs
+
+        Docs: {
+            type:'view',
+            title:'Documents View'
+        },
+        AdminDocs: {
+            type:'view',
+            title:'Upload Documents'
+        },
+        DocsDB: {
+            type:'db',
+        },
+        DocsDB_A1: {
+            type:'api',
+            arrow:'ns',
+            titleIsEmpty: true,
+        },
+        DocsDB_A2: {
+            type:'api',
+            arrow:'n',
+            titleIsEmpty: true,
+        },
+
+        // content
+
+        EditContent: {
+            type:'view',
+        },
+        ContentDB: {
+            type:'db',
+        },
+        ContentDB_A1: {
+            type:'api',
+            arrow:'ns',
+            titleIsEmpty: true,
+        },
+        ContentDB_A2: {
+            type:'api',
+            arrow:'ns',
+            titleIsEmpty: true,
+        },
+
+
+        ViewUsers: {
+            type:'view',
+        },
+        AssignRole: {
+            type:'view',
+        },
+
+        AuthController: {
+            area:'AuthC',
+            type:'controller',
+        },
+        SapAuthController: {
+            area:'SapAuthC',
+            type:'controller',
+            title:'SAP Authorization Service'
+        },
+
+        UserAdmin: {
+            type:'api',
+            arrow:'s',
+            title:'Role: Super admin'
+        },
+        UserContent: {
+            type:'api',
+            arrow:'s',
+            title:'Role: Content manager'
+        },
+        UserInstructor: {
+            type:'api',
+            arrow:'s',
+            title:'Role: Instructor'
+        },
+        UserClient: {
+            type:'api',
+            arrow:'s',
+            title:'Role: Client'
+        },
+
+    }
+
+    data = { ...data, GridMe: List }
+
+</script>
+
+<style>
+    #vizualizer .model-grid {
+        display: grid;
+        grid-gap: 1em;
+        grid-template-columns: repeat( 8, auto );
+        grid-template-rows:    repeat( 24, auto );
+        grid-template-areas:
+' .               .               .               .               .               .               .               Start '
+' UserDB          UserDB_A1       AuthC           AuthC           AuthC           AuthC           getAuth         Welcome '
+' UserDB          .               SapAuthC        SapAuthC        SapAuthC        .               .               . '
+' UserDB          .               UserAdmin       UserContent     UserInstructor  UserClient      .               . '
+' UserDB          UserDB_A2       ViewUsers       .               .               Sessions        .               . '
+' UserDB          UserDB_A3       AssignRole      .               .               Survey          SurveyDB_A1     SurveyDB '
+' .               .               .               .               SurveyResults   .               SurveyDB_A2     SurveyDB '
+' .               .               EditContent     EditContent     AdminDocs       Docs            .               SurveyDB '
+' .               .               ContentDB_A1    ContentDB_A2    DocsDB_A1       DocsDB_A2       .               SurveyDBout '
+' .               .               ContentDB       ContentDB       DocsDB          DocsDB          .               SurveyDBout '
+' .               .               .               .               .               .               .               SurveyDBout '
+' .               .               .               .               .               .               .               .  ';
+    }
+</style>
+
+<div id="vizualizer">
+
+    <article class="model-grid">
+        <figure v-for="(box,id) in GridMe"
+            :style="{'--area':box.area||id}"
+            :class="box.type">
+            <div v-if="box.arrow" class="icon" :class="box.arrow"></div>
+            <div v-if="box.title" >{{ box.title }}</div>
+            <div v-else-if="!box.titleIsEmpty">{{ id }}</div>
+            <ul v-if="box.functions">
+                <li v-for="(item,index) in box.functions">{{ item }}</li>
+            </ul>
+        </figure>
+    </article>
+
+    {{ message }}
+</div>
+
+<style>
+    #vizualizer {
+      --c-view:       hsl(157, 20%, 74%);
+      --c-controller: hsl( 53, 70%, 76%);
+      --c-db:         hsl( 13, 61%, 64%);
+    }
+
+    #vizualizer li {
+        text-align: left;
+    }
+
+    #vizualizer .model-grid > * {
+        display: flex;
+        flex-direction:  column;
+        align-items:     center;
+        align-content:   center;
+        justify-content: center;
+
+        margin:  0;
+        grid-area: var(--area, auto)
+    }
+    #vizualizer .view {
+        background: var(--c-view);
+        text-align: center;
+        padding:    1em;
+    }
+    #vizualizer .controller {
+        background: var(--c-controller);
+        text-align: center;
+        padding:    1em;
+    }
+    #vizualizer .db {
+        background: var(--c-db);
+        text-align: center;
+        padding:    1em;
+    }
+</style>
+
+<script>
+data = { ...data, message: 'Hello Vue!' }
+const app = new Vue({
+  el: '#vizualizer',
+  data,
+})
+</script>
+
+<script>
+    const _String = new String()
+    const _Number = new Number()
+    const _Array  = new Array()
+    const _Undefined = new String()
+</script>
+
+<article class="model-grid">
+
+    <figure class="arrow" style="--area:start">
+            <div class="icon s"></div>
+            </figure>
+
+    <figure name="Welcome View" style="--area:WelcomeView">
+            </figure>
+    <figure class="arrow" style="--area:getAuth">
+            <div class="icon w"></div>
+            <div>getAuth</div>
+            </figure>
+    <figure name="Auth Controller" style="--area:AuthCTRL">
+            </figure>
+
+    <figure name="User DB" class="database" style="--area:UserDB">
+            </figure>
+
+    <figure class="arrow" style="--area:UserDB-a">
+            <div class="icon we"></div>
+            </figure>
+    <figure class="arrow" style="--area:UserDB-b">
+            <div class="icon ns"></div>
+            </figure>
+
+
+    <figure name="SAP Authorization Service" style="--area:SAPAuthCTRL">
+            </figure>
+    <figure name="Role: Super Admin" style="--area:SuperAdmin">
+            </figure>
+    <figure name="Role: Content Manager" style="--area:ContentManager">
+            </figure>
+    <figure name="Role: Instructor" style="--area:Instructor">
+            </figure>
+
+    <figure name="Role: Clent" style="--area:Clent">
+            </figure>
+
+    <figure name="Sessions View" style="--area:SessionsView">
+            </figure>
+    <figure name="Survey View" style="--area:SurveyView">
+            </figure>
+    <figure name="Survey Controller" style="--area:SurveyCTRL">
+            </figure>
+
+    <figure name="App DB" class="database" style="--area:AppDB">
+            </figure>
+
+
+    <figure name="Survey DB" class="database" style="--area:SurveyDB">
+            </figure>
+    <figure class="arrow" style="--area:SurveyDB-a">
+            <div class="icon ns"></div>
+            </figure>
+    <figure class="arrow" style="--area:SurveyDB-b">
+            <div class="icon s"></div>
+            <div>Analitycs</div>
+            <div>Stats</div>
+            <div>etc.</div>
+            </figure>
+
+    <figure name="SuperAdmin Panel" style="--area:AdminPanel">
+            <div>Create User</div>
+            <div>UserList</div>
+            <div>Assign Role</div>
+            </figure>
+
+
+    <style>
+        .model-grid {
+            grid-template-areas:
+'.         .         .         .         .                  .         .         start         .         .'
+'UserDB    UserDB-a  AuthCTRL  AuthCTRL  AuthCTRL           AuthCTRL  getAuth   WelcomeView   .         AppDB'
+'UserDB-b  .         SAPAuthCTRL SAPAuthCTRL SAPAuthCTRL    .         .         .             .         .'
+'AdminPanel .        SuperAdmin  ContentManager Instructor  Clent     .         SessionsView  .         .'
+'AdminPanel .         .         .         .                  .         .        SurveyView    .         SurveyCTRL'
+'.         .         .         .         .                  .         .         .             .         SurveyDB-a'
+'.         .         .         .         .                  .         .         .             .         SurveyDB'
+'.         .         .         .         .                  .         .         .             .         SurveyDB-b'
+'.         .         .         .         .                  .         .         .             .         .'
+'.         .         .         .         .                  .         .         .             .         .'
+;
+        }
+    </style>
+
+</article>
+
+<article class="model-grid">
+
+    <figure name="CreateUser">
+        CreateUser
+    </figure>
+
+    <script>
+        const User = {
+            id:            _Number,
+            role:          _String, // config → UserRoles
+            auth_data:     _Undefined,
+            personal_data: _Undefined,
+        }
+    </script>
+
+    <figure name="SurveyView">
+        SurveyView
+    </figure>
+
+    <figure name="SaveSurveyResults">
+        SaveSurveyResults
+    </figure>
+
+    <script>
+        const SurveyResults = {
+            id:        _Number,
+            survey_id: _Number,
+            user_id:   _Number,
+            values:    _Array,
+        }
+    </script>
+
+    <script>
+        const Survey = {
+            id:     _Number,
+            title:  _String,
+            fields: _Array,
+        }
+    </script>
+
+    <script>
+        const SurveyField = {
+            id:     _Number,
+            title:  _String,
+            type:   _String, // config → FieldTypes
+            values: _Array,
+        }
+    </script>
+
+</article>
+
+
+<!-- Display results -->
+
+<style>
+    .model-grid {
+        display: grid;
+        grid-gap: 1em;
+        grid-template-columns: repeat( 12, auto );
+        grid-template-rows:    repeat( 24, auto );
+    }
+    .model-grid > * {
+        margin:  0;
+        grid-area: var(--area, auto)
+    }
+    .model-grid figure[name] {
+        text-align: center;
+        background-color: wheat;
+        padding: 1em;
+    }
+    .model-grid figure.database {
+        background-color: pink;
+    }
+    .model-grid figure[name]:before {
+        content: attr(name);
+        display: block;
+    }
+    .model-grid script {
+        display:block;
+    }
+    .model-grid .arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content:  center;
+        justify-content: center;
+    }
+    .model-grid .icon {
+        display: block;
+        height: 24px;
+        width:  24px;
+    }
+    .model-grid .icon.n {
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z" /%3E%3C/svg%3E');
+    }
+    .model-grid .icon.s {
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" /%3E%3C/svg%3E');
+    }
+    .model-grid .icon.w {
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /%3E%3C/svg%3E');
+    }
+    .model-grid .icon.e {
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" /%3E%3C/svg%3E');
+    }
+    .model-grid .icon.we {
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M8,10V13H14V18H8V21L2,15.5L8,10M22,8.5L16,3V6H10V11H16V14L22,8.5Z" /%3E%3C/svg%3E');
+    }
+    .model-grid .icon.ns {
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M14,8H11V14H6V8H3L8.5,2L14,8M15.5,22L21,16H18V10H13V16H10L15.5,22Z" /%3E%3C/svg%3E');
+    }
+</style>
+
+</body>
+</html>
+
