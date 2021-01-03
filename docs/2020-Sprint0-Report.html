@@ -120,7 +120,7 @@
 <section class="grid-king">
     <h2 class="h3">In this report</h2>
     <section>
-        <ul>
+        <ol>
             <li>
                 <a href="#RolesAndDataAccess">
                     Roles & Data access
@@ -146,7 +146,7 @@
                     Web app
                 </a>
             </li>
-        </ul>
+        </ol>
     </section>
 </section>
 
@@ -154,9 +154,9 @@
 
 <article class="grid-king chapter" id="RolesAndDataAccess">
 
-    <header class="chapter-header color-box">
+    <header class="chapter-header color-box--">
         <h2 class="h2">
-             Roles & Data access
+             §1. Roles & Data access
         </h2>
     </header>
 
@@ -296,11 +296,98 @@
 
 <article class="grid-king chapter" id="UserInvite">
 
-    <header class="chapter-header color-box">
+    <header class="chapter-header color-box--">
         <h2 class="h2">
-             User invite
+             §2. User invite
         </h2>
     </header>
+
+    <ul class="inngrid">
+        <li>
+            Required role: Instructor
+        </li>
+        <li>
+            There is (or will be) some <b>Session date-picker site</b>. It provides API to read and update client requests.
+        </li>
+    </ul>
+
+    <section class="chart-layer chapter" id="InvitesMap">
+
+        <header class="grid-king">
+            <div>
+                <h3 class="h3">
+                    Client invitation
+                </h3>
+                <p>(scheme)</p>
+            </div>
+        </header>
+
+        <!-- chart view -->
+
+        <div id="InvitationChart">
+            <div class="el-data-chart"
+                :style="{'grid-template-areas':chartmap}"
+                 style="
+                 --cols: 9;
+                 --rows: 10;
+                ">
+
+                <div class="caption" style="--area:Dashboard">
+                    Instructor<br> dashboard
+                </div>
+                <div class="caption" style="--area:Email">
+                    Email<br> controller
+                </div>
+                <div class="caption" style="--area:Client">
+                    Client<br> actions
+                </div>
+
+                <div class="view" style="--area:ClientLinkA; max-width: 14em;">
+                    <p>
+                        Follow the link.<br>
+                        Choose date on
+                        <b>session date-picker site.</b>
+                    </p>
+                </div>
+                <div class="view" style="--area:ClientLinkB">
+                    Follow the link.<br>
+                </div>
+
+                <div v-if="Controllers"
+                     v-for="(item,key) in Controllers"
+                    :class="item.display && item.display.type || 'controller'"
+                    :style="{'--area':key}">
+                     {{ item.title || key }}
+                </div>
+
+                <div v-if="DB_API"
+                     v-for="(item,key) in {...DB_API, ...FlowArrows}"
+                     class="api"
+                    :style="{'--area':key}">
+                    <div>
+                        <div v-if="item.display && item.display.arr">
+                            <div class="svg-icon" :class="item.display.arr"></div>
+                        </div>
+                        <div v-if="item.title">
+                            {{ item.title }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- update view -->
+
+        <script src="charts/InvitationProcess.js"></script>
+        <script>
+            const InvitationChart = new Vue({
+              el:  '#InvitationChart',
+              data: {...InvitationProcess},
+            });
+        </script>
+
+    </section>
 
 </article>
 
@@ -308,9 +395,9 @@
 
 <article class="grid-king chapter" id="ContentManagement">
 
-    <header class="chapter-header color-box">
+    <header class="chapter-header color-box--">
         <h2 class="h2">
-             Content management
+             §3. Content management
         </h2>
     </header>
 
@@ -330,9 +417,9 @@
 
 <article class="grid-king chapter" id="Environment">
 
-    <header class="chapter-header color-box">
+    <header class="chapter-header color-box--">
         <h2 class="h2">
-             Development environment
+             §4. Development environment
         </h2>
     </header>
 
@@ -352,9 +439,9 @@
 
 <article class="grid-king chapter" id="WebApp">
 
-    <header class="chapter-header color-box">
+    <header class="chapter-header color-box--">
         <h2 class="h2">
-             Web app
+             §5. Web app
         </h2>
     </header>
 
@@ -368,7 +455,7 @@
         </section>
 
         <section>
-            UI framework: <b>Vuetify</b> + customization
+            UI framework: <b>Vuetify</b> + custom design
         </section>
     </div>
 
