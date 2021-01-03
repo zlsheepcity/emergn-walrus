@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- appseed 2020.2.22 ninini -->
+
+    <!-- ===================================== HEAD CONTENT -->
+
+
+    <title>Dev Report. Sprint 0.</title>
+    <meta name="description" content="">
+    <meta name="author"      content="zl">
+
+
+    <!-- ## MICRODATA -->
+    <meta property="og:url"          content="">
+    <meta property="og:image"        content="">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="628">
+    <meta property="og:type"         content="article">
+    <meta property="og:locale"       content="en_US">
+
+
+    <!-- ===================================== FAVICON -->
+
+
+    <meta name="theme-color"             content="#314159">
+    <meta name="msapplication-TileColor" content="#314159">
+    <meta name="msapplication-TileImage" content="app/icon512.png">
+    <link type="image/png" rel="icon"       href="app/icon512.png">
+    <link rel="apple-touch-icon"            href="app/icon512.png">
+
+
+    <!-- ===================================== BOOT SERVICE -->
+
+
+    <!-- ༼°▽°༽ style boot -->
+    <style>
+        html       { margin:0; padding:0  0.25rem; }
+        body       { margin:0; padding:0; width:100%; height:auto; }
+        img,svg,hr { margin:0; border: 0; max-width:100%; }
+        body       { overflow-y:scroll; }
+    </style>
+
+
+    <!-- ===================================== GOOGLE FONTS -->
+
+
+    <!-- ༼°▽°༽ prefetch boot -->
+    <link rel="preconnect"   href="//fonts.gstatic.com" crossorigin>
+
+    <link
+        media="none" onload="if(media!='all')media='all'"
+        href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,700&subset=cyrillic"
+        rel="stylesheet">
+
+<noscript>
+        <link
+        media="all"
+        href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,700&subset=cyrillic"
+        rel="stylesheet">
+</noscript>
+
+
+    <!-- ===================================== DESIGN -->
+
+
+    <link
+        media="none" onload="if(media!='all')media='all'"
+        href="app/appart-2019.css"
+        rel="stylesheet" type="text/css">
+        <link
+        media="none" onload="if(media!='all')media='all'"
+        href="app/design.css"
+        rel="stylesheet" type="text/css">
+
+<noscript>
+    <link
+        media="all"
+        href="app/appart-2019.css"
+        rel="stylesheet" type="text/css">
+    <link
+        media="all"
+        href="app/design.css"
+        rel="stylesheet" type="text/css">
+</noscript>
+
+
+    <!-- ===================================== APP -->
+
+    <script>
+        /* ༼°▽°༽ app boot */
+        function AppBoot() {
+
+         // The Noble Blastula
+            let app = this
+            app.has = { memory: [], arrived:true }
+            app.has.queens = [ 'onload', 'mutate' ]
+            /*
+            King has arrived --- let app = new AppBoot()
+            Take the Queen ----- app.attach('queen_name')(function)
+            Keep in memory ----- app.queen_name(function_parameters)
+            Execute later ------ app.onload(function)
+            2019.9.15
+            */
+
+         // The Noble Provocator
+            const proteinProvoker = function ImitateCriticalTasks () {
+              let tpp = new this.__proto__.constructor()
+              let must_have_a_memory = tpp.has.memory.push('something')
+              let must_accept_queens = like_this_one => true
+              tpp.attach('queen_id')(must_accept_queens)
+              tpp.queen_id('try this')
+            }
+
+         // Define responsibility
+            const TakeTheQueen = (queen) =>
+                {
+                    app[queen] =  ExecuteLater(queen)
+                    return (f) => ExecuteLater('update')({name:queen,f})
+                }
+            const KeepInMemory = (dna) => app.has.memory.push(dna)
+            const ExecuteLater =
+                 (responsible) =>
+                         (dna) => KeepInMemory({dna,for:responsible})
+
+         // Apply responsibility
+            app.attach = TakeTheQueen
+            app.has.queens.map( queen => app.attach(queen) )
+            app.ForceErrorsIfShouldBe =  proteinProvoker
+        }
+
+        //  -------------------------------- run immidiately
+        let app = new AppBoot()
+        app.ForceErrorsIfShouldBe()
+    </script>
+
+    <script defer src="app/app-core.js"></script>
+
+    <!-- interface -->
+    <script defer src="app/components/image-zzzoom.js"></script>
+
+
+    <!-- ===================================== CUSTOM -->
+
+
+    <!-- ===================================== HEAD END -->
+</head>
+<body class="colors--ivory">
+
+
+<!-- ···························· TITLE -->
+
+<header class="grid-king chapter isontop">
+    <section class="inngrid-east color-box">
+        <p>
+            Status:<br>
+            draft / 01.03
+        </p>
+    </section>
+    <section class="chapter-header">
+        <h1 class="h1">Dev report</h1>
+        <p  class="h3">Sprint 0, December 2020</p>
+    </section>
+</header>
+
+<!-- ···························· SUMMARY -->
+
+<section class="grid-king">
+    <h2 class="h3">In this report</h2>
+    <section>
+        <ul>
+            <li>
+                <a href="#UserInvite">
+                    User invite
+                </a>
+            </li>
+            <li>
+                <a href="#RolesAndDataAccess">
+                    Roles & Data access
+                </a>
+            </li>
+            <li>
+                <a href="#ContentManagement">
+                    Content management
+                </a>
+            </li>
+            <li>
+                <a href="#Environment">
+                    Development environment
+                </a>
+            </li>
+            <li>
+                <a href="#WebApp">
+                    Web app
+                </a>
+            </li>
+        </ul>
+    </section>
+</section>
+
+<!-- ···························· User invite -->
+
+<article class="grid-king chapter" id="UserInvite">
+
+    <header class="chapter-header color-box">
+        <h2 class="h2">
+             User invite
+        </h2>
+    </header>
+
+</article>
+
+<!-- ···························· Authorization -->
+
+<article class="grid-king chapter" id="RolesAndDataAccess">
+
+    <header class="chapter-header color-box">
+        <h2 class="h2">
+             Roles & Data access
+        </h2>
+    </header>
+
+    <ul class="inngrid">
+        <li>
+            <b>Database</b> is divided into parts, each part can be configured with its own access settings
+        </li>
+        <li>
+            All roles except «Client» require <b>SAP User</b>
+        </li>
+    </ul>
+
+
+</article>
+
+<!-- ···························· Content management -->
+
+<article class="grid-king chapter" id="ContentManagement">
+
+    <header class="chapter-header color-box">
+        <h2 class="h2">
+             Content management
+        </h2>
+    </header>
+
+    <section>
+        <h3 class="h4">Dynamic content</h3>
+        <p>Sessions and survey questions. Supported from the <b>admin dashboard.</b></p>
+    </section>
+
+    <section>
+        <h3 class="h4">Static content</h3>
+        <p>Buttons, errors and other texts. Supported from the <b>config.</b></p>
+    </section>
+
+</article>
+
+<!-- ···························· Environment -->
+
+<article class="grid-king chapter" id="Environment">
+
+    <header class="chapter-header color-box">
+        <h2 class="h2">
+             Development environment
+        </h2>
+    </header>
+
+    <section>
+        <h3 class="h4">SAP Cloud</h3>
+        <p>Database, services, deploy</p>
+    </section>
+
+    <section>
+        <h3 class="h4">SAP GitHub</h3>
+        <p>Code source, docs</p>
+    </section>
+
+</article>
+
+<!-- ···························· Frontend -->
+
+<article class="grid-king chapter" id="WebApp">
+
+    <header class="chapter-header color-box">
+        <h2 class="h2">
+             Web app
+        </h2>
+    </header>
+
+    <div class="inngrid">
+        <section>
+            Javascript
+        </section>
+
+        <section>
+            View framework: <b>Vue</b>
+        </section>
+
+        <section>
+            UI framework: <b>Vuetify</b> + customization
+        </section>
+    </div>
+
+    <section>
+            Clickable prototype:
+            <a href="https://zlsheepcity.github.io/emergn-walrus/dist/#/Welcome">
+                version 0.1
+            </a>
+    </section>
+
+</article>
+
+<!-- ···························· CONTENT -->
+
+
+
+
+<!-- =========================================== ʕ⊙ᴥ⊙ʔ -->
+<!-- ========================================= BODY END -->
+
+</body>
+</html>
