@@ -1,1 +1,93 @@
+/* components */
+
+:root {
+  --SVGArrowN:
+    url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z" /%3E%3C/svg%3E');
+  --SVGArrowS:
+    url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" /%3E%3C/svg%3E');
+  --SVGArrowW:
+      url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /%3E%3C/svg%3E');
+  --SVGArrowE:
+      url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" /%3E%3C/svg%3E');
+  --SVGArrowWE:
+      url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M8,10V13H14V18H8V21L2,15.5L8,10M22,8.5L16,3V6H10V11H16V14L22,8.5Z" /%3E%3C/svg%3E');
+  --SVGArrowNS:
+      url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M14,8H11V14H6V8H3L8.5,2L14,8M15.5,22L21,16H18V10H13V16H10L15.5,22Z" /%3E%3C/svg%3E');
+}
+.svg-icon {
+    display: block;
+    margin:  auto;
+    height:  24px;
+    width:   24px;
+}
+.svg-icon.n  { background-image: var(--SVGArrowN ); }
+.svg-icon.s  { background-image: var(--SVGArrowS ); }
+.svg-icon.w  { background-image: var(--SVGArrowW ); }
+.svg-icon.e  { background-image: var(--SVGArrowE ); }
+.svg-icon.we { background-image: var(--SVGArrowWE); }
+.svg-icon.ns { background-image: var(--SVGArrowNS); }
+
+.chart-layer {
+    grid-column: full;
+    background-color: hsl( 66, 61%, 94%);
+  --COLOR-view:       hsl(157, 20%, 74%);
+  --COLOR-controller: hsl( 53, 70%, 76%);
+  --COLOR-db:         hsl( 13, 58%, 68%);
+  --COLOR-highlight:  hsl(204, 22%, 55%);
+}
+
+.el-data-chart {
+    max-width: 80em;
+    margin:  0 auto;
+
+  --cols: 8;
+  --rows: 24;
+
+    display: grid;
+    grid-gap: 0.5em 1em;
+    padding:  1em;
+    grid-template-columns: repeat( var(--cols), auto );
+    grid-template-rows:    repeat( var(--rows), auto );
+}
+.el-data-chart > * {
+    display: flex;
+    flex-direction:  column;
+    align-items:     center;
+    align-content:   center;
+    justify-content: center;
+    text-align:      center;
+    align-self:      stretch;
+
+    grid-area: var(--area, auto);
+
+    margin:  0;
+    padding: 0.75em 1em;
+    cursor:  default;
+}
+.el-data-chart > *:hover {
+    outline: 0.33em solid var(--COLOR-highlight);
+}
+.el-data-chart .view {
+    background: var(--COLOR-view);
+}
+.el-data-chart .controller {
+    background: var(--COLOR-controller);
+}
+.el-data-chart .db {
+    background: var(--COLOR-db);
+}
+.el-data-chart .api {
+    background: transparent;
+    padding: 0.5em 0.25em;
+}
+.el-data-chart .caption {
+    font-size: 1.5em;
+    line-height: 1;
+    padding:   0.5em 0.25em;
+    max-width: 9em;
+}
+
+
 /* */
+
+

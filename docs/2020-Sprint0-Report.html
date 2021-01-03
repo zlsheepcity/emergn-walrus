@@ -90,58 +90,7 @@
 
     <!-- ===================================== APP -->
 
-    <script>
-        /* ༼°▽°༽ app boot */
-        function AppBoot() {
-
-         // The Noble Blastula
-            let app = this
-            app.has = { memory: [], arrived:true }
-            app.has.queens = [ 'onload', 'mutate' ]
-            /*
-            King has arrived --- let app = new AppBoot()
-            Take the Queen ----- app.attach('queen_name')(function)
-            Keep in memory ----- app.queen_name(function_parameters)
-            Execute later ------ app.onload(function)
-            2019.9.15
-            */
-
-         // The Noble Provocator
-            const proteinProvoker = function ImitateCriticalTasks () {
-              let tpp = new this.__proto__.constructor()
-              let must_have_a_memory = tpp.has.memory.push('something')
-              let must_accept_queens = like_this_one => true
-              tpp.attach('queen_id')(must_accept_queens)
-              tpp.queen_id('try this')
-            }
-
-         // Define responsibility
-            const TakeTheQueen = (queen) =>
-                {
-                    app[queen] =  ExecuteLater(queen)
-                    return (f) => ExecuteLater('update')({name:queen,f})
-                }
-            const KeepInMemory = (dna) => app.has.memory.push(dna)
-            const ExecuteLater =
-                 (responsible) =>
-                         (dna) => KeepInMemory({dna,for:responsible})
-
-         // Apply responsibility
-            app.attach = TakeTheQueen
-            app.has.queens.map( queen => app.attach(queen) )
-            app.ForceErrorsIfShouldBe =  proteinProvoker
-        }
-
-        //  -------------------------------- run immidiately
-        let app = new AppBoot()
-        app.ForceErrorsIfShouldBe()
-    </script>
-
-    <script defer src="app/app-core.js"></script>
-
-    <!-- interface -->
-    <script defer src="app/components/image-zzzoom.js"></script>
-
+    <script src="app/vue.js"></script>
 
     <!-- ===================================== CUSTOM -->
 
@@ -173,13 +122,13 @@
     <section>
         <ul>
             <li>
-                <a href="#UserInvite">
-                    User invite
+                <a href="#RolesAndDataAccess">
+                    Roles & Data access
                 </a>
             </li>
             <li>
-                <a href="#RolesAndDataAccess">
-                    Roles & Data access
+                <a href="#UserInvite">
+                    User invite
                 </a>
             </li>
             <li>
@@ -201,19 +150,7 @@
     </section>
 </section>
 
-<!-- ···························· User invite -->
-
-<article class="grid-king chapter" id="UserInvite">
-
-    <header class="chapter-header color-box">
-        <h2 class="h2">
-             User invite
-        </h2>
-    </header>
-
-</article>
-
-<!-- ···························· Authorization -->
+<!-- ···························· AUTH ROLES -->
 
 <article class="grid-king chapter" id="RolesAndDataAccess">
 
@@ -225,17 +162,149 @@
 
     <ul class="inngrid">
         <li>
-            <b>Database</b> is divided into parts, each part can be configured with its own access settings
+            All user roles except «Client» require <b>SAP User</b>
         </li>
         <li>
-            All roles except «Client» require <b>SAP User</b>
+            <b>Database</b> is divided into parts, each part can be configured with its own access settings
         </li>
     </ul>
 
+    <section class="chart-layer chapter" id="RolesMap">
+
+        <header class="grid-king">
+            <div>
+                <h3 class="h3">
+                    Roles map
+                </h3>
+                <p>(scheme)</p>
+            </div>
+        </header>
+
+        <!-- chart view -->
+
+        <div id="AuthorizationChart">
+            <div class="el-data-chart"
+                :style="{'grid-template-areas':chartmap}"
+                 style="
+                 --cols: 8;
+                 --rows: 16;
+                ">
+
+                <div class="api" style="--area:LoginAction1">
+                    <div>
+                        <div class="caption">Start</div>
+                        <div class="svg-icon s"></div>
+                    </div>
+                </div>
+                <div class="api" style="--area:LoginAction2">
+                    <div>
+                        <div class="svg-icon w"></div>
+                    </div>
+                </div>
+
+                <div v-if="DB"
+                     v-for="(item,key) in DB"
+                     class="db"
+                    :style="{'--area':key}">
+                    {{ item.title || key }}
+                </div>
+
+                <div v-if="Roles"
+                     v-for="(item,key) in Roles"
+                     class="api"
+                     style="align-self: start"
+                    :style="{'--area':key}">
+                    <div>
+                        <div class="svg-icon s"></div>
+                        <div class="caption">{{ item.title || key }}</div>
+                    </div>
+                </div>
+
+                <div v-if="DB_API"
+                     v-for="(item,key) in DB_API"
+                     class="api"
+                    :style="{'--area':key}">
+                    <div>
+                        <div v-if="item.display && item.display.arr">
+                            <div class="svg-icon" :class="item.display.arr"></div>
+                        </div>
+                        <div v-if="item.title" class="caption">
+                            {{ item.title }}
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="Views"
+                     v-for="(item,key) in Views"
+                     class="view"
+                    :style="{'--area':key}">
+                     {{ item.title || key }}
+                </div>
+
+                <div v-if="AuthController"
+                     v-for="(item,key) in AuthController"
+                     class="controller"
+                    :style="{'--area':key}">
+                     {{ item.title || key }}
+                </div>
+
+                <div v-if="Dashboard"
+                     v-for="(item,key) in Dashboard"
+                     class="controller"
+                    :style="{'--area':key}">
+                     {{ item.title || key }}
+                </div>
+
+            </div>
+        </div>
+
+        <!-- legend -->
+
+        <div class="el-data-chart"
+             style="
+             --cols: 5;
+             --rows: 1;
+               padding-top: 4em;
+            ">
+            <div class="caption">Legend:</div>
+            <div class="controller">App<br> Controller</div>
+            <div class="db">Database<br> Controller</div>
+            <div class="view">Client view<br> Controller</div>
+            <div class="api">
+                <div>
+                    <div class="svg-icon we"></div>
+                    <div>api</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- update view -->
+
+        <script src="charts/AuthRoles.js"></script>
+        <script>
+            const AuthorizationChart = new Vue({
+              el:  '#AuthorizationChart',
+              data: {...AuthRoles},
+            });
+        </script>
+
+    </section>
 
 </article>
 
-<!-- ···························· Content management -->
+<!-- ···························· INVITE -->
+
+<article class="grid-king chapter" id="UserInvite">
+
+    <header class="chapter-header color-box">
+        <h2 class="h2">
+             User invite
+        </h2>
+    </header>
+
+</article>
+
+<!-- ···························· CONTENT -->
 
 <article class="grid-king chapter" id="ContentManagement">
 
@@ -257,7 +326,7 @@
 
 </article>
 
-<!-- ···························· Environment -->
+<!-- ···························· ENVIRONMENT -->
 
 <article class="grid-king chapter" id="Environment">
 
@@ -279,7 +348,7 @@
 
 </article>
 
-<!-- ···························· Frontend -->
+<!-- ···························· FRONTEND -->
 
 <article class="grid-king chapter" id="WebApp">
 
