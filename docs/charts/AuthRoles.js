@@ -50,7 +50,7 @@ let AuthRoles = {
     Dashboard: {
         UserManager:   {},
         RoleManager:   {},
-        ContentEditor: {},
+        ContentDashboard: {},
         ClientProfile: {},
         SurveyResults: {},
         UploadDocs:    {},
@@ -70,7 +70,7 @@ AuthRoles.chartmap = `
 ' .         .               .               .               .               SurveyView      crudSurvey      SurveysDB '
 ' .         .               .               .               SurveyResults   .               readSurvey      SurveysDB '
 
-' .         .               ContentEditor   ContentEditor   UploadDocs      DocsView        .               SurveysDB '
+' .         .               ContentDashboard ContentDashboard UploadDocs      DocsView        .               SurveysDB '
 ' .         .               crudContentA    crudContentC    crudDocs        readDocs        .               exportSurvey '
 ' AllViews  readContent     ContentDB       ContentDB       DocsDB          DocsDB          .               exportSurvey '
 ' .         .               .               .               .               .               .               exportSurvey '
